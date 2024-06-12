@@ -1,29 +1,20 @@
-import {
-  HeaderContainer,
-  Navigation,
-  StyledLink,
-  IconWrapper,
-} from './Header.styled';
-import sprite from 'assets/sprite.svg';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
 
   return (
-    <HeaderContainer>
-      <Navigation>
-        <StyledLink to="/first">
-          <IconWrapper>
-            <use href={`${sprite}#icon-logo`} />
-          </IconWrapper>
-          First
-        </StyledLink>
-        <StyledLink to="/second">
-          <IconWrapper>
-            <use href={`${sprite}#icon-logo`} />
-          </IconWrapper>
-          Second
-        </StyledLink>
-      </Navigation>
-    </HeaderContainer>
+    <header>
+      <nav>
+        <Link to="/home">
+         HomePage
+        </Link>
+        <Link to="/teachers">
+          Teachers
+        </Link>
+        <Link to="/favorites">
+          Favorites
+        </Link>
+      </nav>
+    </header>
   );
 };
