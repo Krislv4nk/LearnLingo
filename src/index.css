@@ -1,7 +1,7 @@
 :root {
   --dark-color: #121417;
   --white-color: #ffffff;
-  --lightblue: #f8f8f8;
+  --lightgray: #f8f8f8;
   --textColor: rgba(18, 20, 23, 0.7);
   --form: rgba(18, 20, 23, 0.8);
   --gray: #8a8a89;
@@ -9,9 +9,9 @@
 }
 
 body {
-  
+  color: var(--dark-color);
   font-family: 'Roboto', sans-serif;
-
+background-color: var(--white-color);
 }
 h1,
 h2,
@@ -20,7 +20,8 @@ h4,
 h5,
 h6,
 p {
-  margin-top: 0;
+  
+  margin: 0;
 }
 a {
   text-decoration: none;
