@@ -4,7 +4,6 @@ import HomePage from 'pages/HomePage/HomePage';
 import Teachers from 'pages/Teachers/Teachers';
 import Favorites from 'pages/Favorites/Favorites';
 
-
 function App() {
  
   return (

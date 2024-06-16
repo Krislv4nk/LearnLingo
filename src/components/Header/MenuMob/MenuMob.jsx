@@ -7,7 +7,7 @@ export const MenuMob = ({onClose}) => {
 
   return (
   
-      <div className={css.menuDrop}>
+      
         <div className={css.wrapper}>
       
         <button className={css.iconClose} onClick={onClose}>
@@ -32,7 +32,7 @@ export const MenuMob = ({onClose}) => {
         <li><button className={css.registrButton} type='button'>Registration</button></li>
       </ul>
       </div>
-      </div>
+   
     )
  
 };
