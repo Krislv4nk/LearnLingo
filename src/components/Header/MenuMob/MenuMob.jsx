@@ -1,10 +1,26 @@
 
+
+import { useState } from 'react';
+import { StyledEngineProvider } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+
+import { AuthForm } from '../../Auth/AuthForm/AuthForm';
 import { Link } from 'react-router-dom';
 import css from './MenuMob.module.css';
 import sprite from '../../../assets/sprite.svg';
 
 export const MenuMob = ({onClose}) => {
 
+   const [openModal, setOpenModal] = useState(false);
+  
+  const openModalHandler = () => {
+    
+    setOpenModal(true);
+  };
+  
+  const closeModalHandler = () => {
+    setOpenModal(false);
+  };
   return (
   
       
@@ -26,10 +42,21 @@ export const MenuMob = ({onClose}) => {
 </ul>
       </nav>
       <ul className={css.authBox}>
-        <li><button className={css.logInButton} type='button'><svg className={css.iconLogIn} width={20} height={20}>
+        <li><button className={css.logInButton} onClick={() => openModalHandler('login')} type='button'>
+          <svg className={css.iconLogIn} width={20} height={20}>
               <use xlinkHref={`${sprite}#icon-log-in`}></use>
-             </svg>Log In</button></li>
-        <li><button className={css.registrButton} type='button'>Registration</button></li>
+        </svg>Log In</button>
+          <StyledEngineProvider injectFirst>
+        <Dialog open={openModal} onClose={closeModalHandler} className={css.backdrop}
+           PaperComponent={() => <AuthForm onClose={closeModalHandler} />} />
+      </StyledEngineProvider>
+        </li>
+        <li><button onClick={() => openModalHandler('register')} className={css.registrButton} type='button'>Registration</button>
+          <StyledEngineProvider injectFirst>
+        <Dialog open={openModal} onClose={closeModalHandler} className={css.backdrop}
+           PaperComponent={() => <AuthForm onClose={closeModalHandler} />} />
+      </StyledEngineProvider>
+        </li>
       </ul>
       </div>
    

@@ -52,7 +52,7 @@ export const Header = () => {
       </button>
     
       <StyledEngineProvider injectFirst>
-        <Dialog open={openMenuMob} onClose={handleCloseClick}
+        <Dialog open={openMenuMob} onClose={handleCloseClick} className={css.backdrop}
           PaperComponent={() => <MenuMob onClose={handleCloseClick} />} />
       </StyledEngineProvider>
     </header>

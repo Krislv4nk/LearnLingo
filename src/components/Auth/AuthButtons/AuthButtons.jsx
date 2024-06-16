@@ -31,7 +31,7 @@ export const AuthButtons = () => {
             Log In
                 </button>
                 <StyledEngineProvider injectFirst>
-        <Dialog open={openModal} onClose={closeModalHandler} 
+        <Dialog open={openModal} onClose={closeModalHandler} className={css.backdrop}
            PaperComponent={() => <AuthForm onClose={closeModalHandler} />} />
       </StyledEngineProvider>
         </li>
@@ -40,7 +40,7 @@ export const AuthButtons = () => {
             Registration
                 </button>
                 <StyledEngineProvider injectFirst>
-        <Dialog open={openModal} onClose={closeModalHandler} 
+        <Dialog open={openModal} onClose={closeModalHandler} className={css.backdrop}
            PaperComponent={() => <AuthForm onClose={closeModalHandler} />} />
       </StyledEngineProvider>
             </li>

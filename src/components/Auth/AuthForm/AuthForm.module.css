@@ -1,28 +1,132 @@
 
-.wrapper {
-    padding: 64px;
+@media screen and (min-width: 220px) {
+  .wrapper {
+    padding: 30px 20px;
     display: flex;
   flex-direction: column;
+  justify-content: center;
   position: absolute;
-  top: 0;
-  right: 0;
-  
-width: 800px;
-height: 600px;
+   top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   background-color: var(--white-color);
   z-index: 6;
   transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 10px;
-}
-.iconClose {
+  }
+  .closeBtn {
+               cursor: pointer;
+               content: "";
+               border: none;
+                display: flex;
+               justify-content: center;
+               align-items: center;
+width: 40px;
+  height: 40px;
     position: absolute;
     top: 20px;
-    right: 20px;
+right: 20px;
     cursor: pointer;
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cross {
+  width: 32px;
+  height: 32px;
+  stroke: black;
 }
 .AuthForm {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+.title {
+  font-weight: 500;
+font-size: 30px;
+line-height: 120%;
+letter-spacing: -0.02em;
+color: var(--dark-color);
+margin-bottom: 20px;
+}
+.formInfo {
+
+font-weight: 400;
+font-size: 16px;
+line-height: 137%;
+color: var(--form);
+margin-bottom: 40px;
+}
+.passwordContainer {
+  position: relative;
+}
+.field {
+  /* border: 1px solid rgba(18, 20, 23, 0.1); */
+  border: 1px solid rgb(31, 56, 95);
+border-radius: 12px;
+padding: 12px 14px;
+width: 280px;
+height: 44px;
+outline: none;
+margin-bottom: 18px;
+font-size: 16px;
+}
+.passwordBtn {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  right: 17px;
+  top: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  outline: none;
+}
+.passwordIcon {
+  width: 20px;
+  height: 20px;
+  fill: transparent;
+  stroke: black;
+}
+.label {
+  display: none;
+}
+.formBtn {
+  border-radius: 12px;
+padding: 16px 100px;
+width: 280px;
+height: 60px;
+font-weight: 700;
+font-size: 18px;
+line-height: 156%;
+color: var(--dark-color);
+}
+}
+
+
+@media screen and (min-width: 834px) {
+.wrapper {
+    padding: 64px;
+}
+
+
+.title {
+font-size: 40px;
+}
+.formInfo {
+ width: 438px;
+}
+
+.field {
+padding: 16px 18px;
+width: 438px;
+height: 54px;
+
+}
+
+.formBtn {
+padding: 16px 160px;
+width: 438px;
+height: 60px;
+
+}
 }
