@@ -1,8 +1,17 @@
-.header {
-    width: 1184px;
+@media screen and (min-width: 220px) {
+  
+
+  .mobileMenuButton {
+    display: block;
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: transparent;
+    border: none;
+  }
+  .header {
+    max-width: 1184px;
 height: 48px;
 margin: 20px auto;
-padding: 10px 0;
+padding: 10px 20px;
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -21,7 +30,25 @@ line-height: 1.2;
 letter-spacing: -0.02em;
 color: var(--dark-color);
 }
-.navList {
+.nav {
+    display: none;
+}
+
+.authBox {
+    display: none;
+}
+}
+
+
+@media screen and (min-width: 834px) {
+
+    .nav {
+    display: block;
+}
+    .mobileMenuButton {
+    display: none;
+  }
+  .navList {
     display: flex;
     gap: 28px;
 }
@@ -69,4 +96,6 @@ transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 .registrButton:hover,
 .registrButton:focus {
     background-color: var(--form);
+}
+
 }
