@@ -16,6 +16,7 @@
     "@fontsource/roboto": "^5.0.13",
     "@mui/material": "^5.15.20",
     "@vitejs/plugin-react-swc": "^3.3.2",
+    "firebase": "^10.12.2",
     "formik": "^2.4.6",
     "modern-normalize": "^2.0.0",
     "normalize.css": "^8.0.1",
