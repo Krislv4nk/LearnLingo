@@ -2,11 +2,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import css from './Header.module.css';
-import sprite from '../../assets/sprite.svg';
-import { MenuMob } from '../Header/MenuMob/MenuMob';
+import sprite from '../../../assets/sprite.svg';
+import { MenuMob } from './MenuMob/MenuMob';
 import { StyledEngineProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import { AuthButtons } from '../Auth/AuthButtons/AuthButtons';
+import { AuthButtons } from '../../Auth/AuthButtons/AuthButtons';
 
 export const Header = () => {
 
@@ -24,7 +24,7 @@ export const Header = () => {
   return (
     <header className={css.header}>
       <div className={css.logo}>
-        <Link className={css.logoLink} to={'/home'}>
+        <Link className={css.logoLink} to={'/'}>
           <svg width={28} height={28}>
             <use href={`${sprite}#icon-ukraine`}></use>
           </svg>
@@ -34,10 +34,13 @@ export const Header = () => {
       <nav className={css.nav}>
         <ul className={css.navList}>
           <li>
-            <Link className={css.link} to="/home">Home</Link>
+            <Link className={css.link} to="/">Home</Link>
           </li>
           <li>
             <Link className={css.link} to="/teachers">Teachers</Link>
+          </li>
+          <li>
+            <Link className={css.link} to="/favorites">Favorites</Link>
           </li>
         </ul>
       </nav>

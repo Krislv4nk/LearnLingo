@@ -7,10 +7,11 @@ import * as Yup from 'yup';
 import icons from '../../../assets/sprite.svg';
 import css from './AuthForm.module.css';
 
-export const AuthForm = ({ onClose }) => {
+export const AuthForm = ({ onClose, isSignUp }) => {
  const navigate = useNavigate();
 const [lookPassword, setLookPassword] = useState(false);
-const [isSignUp, setIsSignUp] = useState(true);
+  
+  
 
 const initialValues = {
 name: '',
@@ -36,7 +37,7 @@ const onSubmit = async (values, { setSubmitting }) => {
   if (isSignUp) {
     const result = await userSignUp(values);
     if (result.success) { 
-      navigate('/login'); 
+      navigate('/'); 
     }
   } else {
     const result = await userSignIn(values);
@@ -47,9 +48,7 @@ const onSubmit = async (values, { setSubmitting }) => {
   setSubmitting(false);
 };
 
-const handleFormToggle = () => {
-setIsSignUp(prevState => !prevState);
-};
+
 
 const passwordVisible = () => {
 setLookPassword(prevLookPassword => !prevLookPassword);
@@ -123,14 +122,14 @@ return (
       </Form>
     )}
   </Formik>
-  <p className={css.formInfo}>
+  {/* <p className={css.formInfo}>
     {isSignUp
       ? "Already have an account? "
       : "Don't have an account yet? "}
     <button className={css.toggleBtn} type="button" onClick={handleFormToggle}>
       {isSignUp ? 'Login' : 'Sign Up'}
     </button>
-  </p>
+  </p> */}
 </div>
 );
 };

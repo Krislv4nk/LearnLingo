@@ -1,4 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
+import PrivateRoute from './components/Auth/Routes/PrivateRoute';
 import SharedLayout from 'components/SharedLayout/SharedLayout';
 import HomePage from 'pages/HomePage/HomePage';
 import Teachers from 'pages/Teachers/Teachers';
@@ -10,9 +11,11 @@ function App() {
     
       <Routes>
         <Route path="/" element={<SharedLayout />}>
-          <Route index path="home" element={<HomePage />} />
-          <Route path="teachers" element={<Teachers />} />
-         <Route path="favorites" element={<Favorites />} />
+          <Route index element={<HomePage />} />
+          <Route path="teachers" element={<Teachers />}  />
+         <Route path="favorites" element={<PrivateRoute>
+              <Favorites />
+            </PrivateRoute>} />
       </Route>
       <Route path="*" element={<Navigate to="/" />} />
       </Routes>

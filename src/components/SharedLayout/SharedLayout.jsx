@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Header } from 'components/Header/Header';
-import { Loader } from "components/Loader/Loader";
+import { Header } from '../SharedLayout/Header/Header';
+import { Loader } from "../SharedLayout/Loader/Loader";
 
 const SharedLayout = () => {
   return (

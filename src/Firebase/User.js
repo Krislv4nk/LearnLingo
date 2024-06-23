@@ -19,10 +19,15 @@ export  const userSignUp = async (dataForm) => {
     const user = userCredentials.user;
     await sendEmailVerification(auth.currentUser);
     await reload(user);
+    if (user.emailVerified) {
+      toast.success(`Welcome ${user.displayName} to LearnLingo`);
+      localStorage.setItem("isSignUp", "true");
+    }
     toast.info("Please, verify your email to complete registration and login!");
     return user;
   } catch (error) {
     toast.error(error.message || "Email already in use or other error!");
+    console.error(error);
   }
 }
 //, setShowStatus
