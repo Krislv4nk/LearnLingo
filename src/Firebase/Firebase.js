@@ -1,16 +1,17 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import * as constants from './constants';
 
 
-const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
-const authDomain = import.meta.env.VITE_FIREBASE_AUTH_DOMAIN;
-const databaseURL = import.meta.env.VITE_FIREBASE_URL;
-const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
-const storageBucket = import.meta.env.VITE_FIREBASE_STORAGE_BUCKET;
-const messagingSenderId = import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID;
-const appId = import.meta.env.VITE_FIREBASE_APP_ID;
-const measurementId = import.meta.env.VITE_FIREBASE_MEASUREMENT_ID;
+const apiKey = constants.VITE_FIREBASE_API_KEY;
+const authDomain = constants.VITE_FIREBASE_AUTH_DOMAIN;
+const databaseURL = constants.VITE_FIREBASE_URL;
+const projectId = constants.VITE_FIREBASE_PROJECT_ID;
+const storageBucket = constants.VITE_FIREBASE_STORAGE_BUCKET;
+const messagingSenderId = constants.VITE_FIREBASE_MESSAGING_SENDER_ID;
+const appId = constants.VITE_FIREBASE_APP_ID;
+const measurementId = constants.VITE_FIREBASE_MEASUREMENT_ID;
 
 const firebaseConfig = {
   apiKey,
