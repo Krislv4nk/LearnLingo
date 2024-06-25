@@ -4,7 +4,7 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import sprite from '../../../../assets/sprite.svg';
 import css from './Status.module.css';
-import { LogOut } from '../../Header/Status/LogOut/LogOut';
+import { LogOutModal } from '../../Header/Status/LogOut/LogOut';
 
 export const Status = () => {
 ;
@@ -30,7 +30,7 @@ export const Status = () => {
                 </button>
                 <StyledEngineProvider injectFirst>
         <Dialog open={openLogOutModal} onClose={closeModalHandler} className={css.backdrop}
-           PaperComponent={() => <LogOut onClose={closeModalHandler}  isSignIn={true}/>} />
+           PaperComponent={() => <LogOutModal onClose={closeModalHandler}  isSignIn={true}/>} />
       </StyledEngineProvider>
             
 </div>

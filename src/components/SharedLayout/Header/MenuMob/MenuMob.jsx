@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { StyledEngineProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import { LogOut } from '../Status/LogOut/LogOut';
+import { LogOutModal } from '../Status/LogOut/LogOut';
 import { AuthForm } from '../../../Auth/AuthForm/AuthForm';
 import { Link } from 'react-router-dom';
 import css from './MenuMob.module.css';
@@ -81,7 +81,7 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
                 </button>
                 <StyledEngineProvider injectFirst>
         <Dialog open={openLogOutModal} onClose={closeModalHandler} className={css.backdrop}
-           PaperComponent={() => <LogOut onClose={closeModalHandler}  isSignIn={true}/>} />
+           PaperComponent={() => <LogOutModal onClose={closeModalHandler}  isSignIn={true}/>} />
       </StyledEngineProvider>
             
 </div>}

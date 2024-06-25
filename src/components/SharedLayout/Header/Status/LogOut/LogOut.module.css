@@ -1,3 +1,82 @@
 
+@media screen and (min-width: 220px) {
+  .wrapper {
+    padding: 30px 20px;
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+   top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
+  background-color: var(--white-color);
+  z-index: 6;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
+  }
+  .closeBtn {
+               cursor: pointer;
+               content: "";
+               border: none;
+                display: flex;
+               justify-content: center;
+               align-items: center;
+width: 40px;
+  height: 40px;
+    position: absolute;
+    top: 20px;
+right: 20px;
+    cursor: pointer;
+}
+.cross {
+  width: 32px;
+  height: 32px;
+  stroke: black;
+}
+.title {
+  font-weight: 500;
+font-size: 30px;
+line-height: 120%;
+letter-spacing: -0.02em;
+color: var(--dark-color);
+margin-bottom: 20px;
+}
+.formInfo {
+
+font-weight: 400;
+font-size: 16px;
+line-height: 137%;
+color: var(--form);
+margin-bottom: 40px;
+}
+.logOutBtn {
+     border-radius: 12px;
+padding: 16px 100px;
+width: 280px;
+height: 60px;
+font-weight: 700;
+font-size: 18px;
+line-height: 156%;
+color: var(--dark-color);
+}
+}
+@media screen and (min-width: 834px) {
+.wrapper {
+    padding: 64px;
+}
+
+
+.title {
+font-size: 40px;
+}
+.formInfo {
+ width: 438px;
+}
+.logOutBtn {
+    padding: 16px 160px;
+width: 438px;
+height: 60px;
+}
+}
 

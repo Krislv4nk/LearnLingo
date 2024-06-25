@@ -122,14 +122,6 @@ return (
       </Form>
     )}
   </Formik>
-  {/* <p className={css.formInfo}>
-    {isSignUp
-      ? "Already have an account? "
-      : "Don't have an account yet? "}
-    <button className={css.toggleBtn} type="button" onClick={handleFormToggle}>
-      {isSignUp ? 'Login' : 'Sign Up'}
-    </button>
-  </p> */}
 </div>
 );
 };

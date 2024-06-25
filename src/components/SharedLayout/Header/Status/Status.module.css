@@ -17,13 +17,13 @@ display: flex;
 font-size: 16px;
     line-height: 1.2;
     background-color: var(--white-color);
-    color: var(--dark-color);
+   
     text-decoration: none;
     transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
 }
 .icon {
-    fill: var(--dark-color);
+    /* fill: var(--dark-color); */
     stroke: var(--dark-color);
 }
 .logOutButton {
