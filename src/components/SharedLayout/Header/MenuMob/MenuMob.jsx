@@ -13,7 +13,7 @@ export const MenuMob = ({onClose, isSignIn}) => {
 const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
  const [openLogOutModal, setOpenLogOutModal] = useState(false);
- 
+ const [isSignUp, setIsSignUp] = useState(true);
 
   const openLogOutModalHandler = () => {
     setOpenLogOutModal(true);
@@ -23,17 +23,24 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
   const openLoginModalHandler = () => {
     setOpenLoginModal(true);
     setOpenRegisterModal(false);
+     setIsSignUp(false);
   };
 
   const openRegisterModalHandler = () => {
     setOpenRegisterModal(true);
     setOpenLoginModal(false);
+    setIsSignUp(true);
   };
 
   const closeModalHandler = () => {
     setOpenLoginModal(false);
     setOpenRegisterModal(false);
     setOpenLogOutModal(false);
+  };
+  const handleSwitchToLogin = () => {
+    setIsSignUp(false);
+    setOpenRegisterModal(false);
+    setOpenLoginModal(true);
   };
   return (
         <div className={css.wrapper}>
@@ -55,23 +62,7 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
         </Link></li>
 </ul>
       </nav>
-        {isSignIn ? <ul className={css.authBox}>
-         <li><button className={css.logInButton} onClick={openLoginModalHandler} type='button'>
-          <svg className={css.iconLogIn} width={20} height={20}>
-              <use xlinkHref={`${sprite}#icon-log-in`}></use>
-        </svg>Log In</button>
-          <StyledEngineProvider injectFirst>
-        <Dialog open={openLoginModal} onClose={closeModalHandler} className={css.backdrop}
-           PaperComponent={() => <AuthForm onClose={closeModalHandler} />} />
-      </StyledEngineProvider>
-        </li>
-        <li><button onClick={openRegisterModalHandler} className={css.registrButton} type='button'>Registration</button>
-          <StyledEngineProvider injectFirst>
-        <Dialog open={openRegisterModal} onClose={closeModalHandler} className={css.backdrop}
-           PaperComponent={() => <AuthForm onClose={closeModalHandler} isSignUp={true}/>} />
-      </StyledEngineProvider>
-        </li>
-      </ul> : <div className={css.authBox}>
+        {isSignIn ? <div className={css.authBox}>
             <button className={css.logInButton} onClick={openLoginModalHandler} type='button'>
           <svg className={css.iconLogIn} width={20} height={20}>
               <use xlinkHref={`${sprite}#icon-user`}></use>
@@ -84,7 +75,23 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
            PaperComponent={() => <LogOutModal onClose={closeModalHandler}  isSignIn={true}/>} />
       </StyledEngineProvider>
             
-</div>}
+</div> : <ul className={css.authBox}>
+         <li><button className={css.logInButton} onClick={openLoginModalHandler} type='button'>
+          <svg className={css.iconLogIn} width={20} height={20}>
+              <use xlinkHref={`${sprite}#icon-log-in`}></use>
+        </svg>Log In</button>
+          <StyledEngineProvider injectFirst>
+        <Dialog open={openLoginModal} onClose={closeModalHandler} className={css.backdrop}
+           PaperComponent={() => <AuthForm onClose={closeModalHandler} isSignUp={isSignUp} onSwitchToLogin={handleSwitchToLogin}/>} />
+      </StyledEngineProvider>
+        </li>
+        <li><button onClick={openRegisterModalHandler} className={css.registrButton} type='button'>Registration</button>
+          <StyledEngineProvider injectFirst>
+        <Dialog open={openRegisterModal} onClose={closeModalHandler} className={css.backdrop}
+           PaperComponent={() => <AuthForm onClose={closeModalHandler} isSignUp={isSignUp} onSwitchToLogin={handleSwitchToLogin} />} />
+      </StyledEngineProvider>
+        </li>
+      </ul>}
       </div>
    
     )

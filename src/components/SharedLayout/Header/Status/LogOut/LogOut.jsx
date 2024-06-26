@@ -5,11 +5,11 @@ import css from '../LogOut/LogOut.module.css';
 
 
 export const LogOutModal = ({onClose}) => {
-
+  
   
 const handleLogout = async () => {
     await LogOut();
-  
+ 
     onClose(); 
   };
   

@@ -7,8 +7,9 @@ import { MenuMob } from './MenuMob/MenuMob';
 import { StyledEngineProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import { AuthButtons } from '../../Auth/AuthButtons/AuthButtons';
+import { Status } from '../Header/Status/Status'
 
-export const Header = () => {
+export const Header = ({ isSignIn }) => {
 
   const [openMenuMob, setOpenMenuMob] = useState(false);
   
@@ -44,8 +45,10 @@ export const Header = () => {
           </li>
         </ul>
       </nav>
-
-      <AuthButtons />
+      {isSignIn ?
+        <Status isSignIn={isSignIn} />
+        :
+        <AuthButtons isSignIn={isSignIn}/>}
       
 
       <button className={css.mobileMenuButton} onClick={handleOpenClick} type='button' title='Menu'>

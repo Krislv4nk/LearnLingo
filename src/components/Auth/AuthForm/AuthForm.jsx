@@ -3,15 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { userSignUp, userSignIn } from '../../../Firebase/User';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-// import { toast } from 'react-toastify';
 import icons from '../../../assets/sprite.svg';
 import css from './AuthForm.module.css';
 
-export const AuthForm = ({ onClose, isSignUp }) => {
+export const AuthForm = ({ onClose, isSignUp, onSwitchToLogin }) => {
  const navigate = useNavigate();
-const [lookPassword, setLookPassword] = useState(false);
-  
-  
+  const [lookPassword, setLookPassword] = useState(false);
 
 const initialValues = {
 name: '',
@@ -32,23 +29,36 @@ email: Yup.string().email('Invalid email address').required('Email is required')
 password: Yup.string().required('Password is required'),
 });
 
-const onSubmit = async (values, { setSubmitting }) => {
-  
-  if (isSignUp) {
-    const result = await userSignUp(values);
-    if (result.success) { 
-      navigate('/'); 
+ const handleSignUp = async (values, { setSubmitting }) => {
+    try {
+      await userSignUp(values);
+      onSwitchToLogin();
+      setSubmitting(false);
+    } catch (error) {
+      console.error('Error signing up:', error);
+      setSubmitting(false);
     }
-  } else {
-    const result = await userSignIn(values);
-    if (result.success) { 
-      navigate('/teachers'); 
+  };
+
+ const handleLogin = async (values, { setSubmitting }) => {
+    try {
+      await userSignIn(values);
+      navigate('/teachers');
+      onClose();
+      setSubmitting(false);
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setSubmitting(false);
     }
-  }
-  setSubmitting(false);
-};
+  };
 
-
+  const onSubmit = (values, { setSubmitting }) => {
+    if (isSignUp) {
+      handleSignUp(values, { setSubmitting });
+    } else {
+      handleLogin(values, { setSubmitting });
+    }
+  };
 
 const passwordVisible = () => {
 setLookPassword(prevLookPassword => !prevLookPassword);
