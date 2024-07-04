@@ -30,14 +30,14 @@ export  const userSignUp = async (dataForm) => {
     console.error(error);
   }
 }
-//, setShowStatus
+
 export const userSignIn = async (dataForm) => {
   const { email, password } = dataForm;
-  const auth = getAuth();
+
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
     if (res.user.emailVerified) {
-      // setShowStatus(false);
+   
       toast.success(`Welcome ${res.user.displayName} to LearnLingo`);
       localStorage.setItem("isLogin", "true");
     } else {
@@ -49,7 +49,7 @@ export const userSignIn = async (dataForm) => {
 }
 
 export const LogOut = async () => {
-  const auth = getAuth();
+ 
   try {
     await signOut(auth);
     localStorage.removeItem("isLogin");

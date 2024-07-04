@@ -45,6 +45,7 @@ password: Yup.string().required('Password is required'),
       await userSignIn(values);
       navigate('/teachers');
       onClose();
+      window.location.reload();
       setSubmitting(false);
     } catch (error) {
       console.error('Error logging in:', error);

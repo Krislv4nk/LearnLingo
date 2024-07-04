@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import css from './Header.module.css';
 import sprite from '../../../assets/sprite.svg';
@@ -9,17 +9,25 @@ import Dialog from '@mui/material/Dialog';
 import { AuthButtons } from '../../Auth/AuthButtons/AuthButtons';
 import { Status } from '../Header/Status/Status'
 
-export const Header = ({ isSignIn }) => {
-
+export const Header = () => {
+const [isSignIn, setIsSignIn] = useState(localStorage.getItem('isLogin') === 'true');
   const [openMenuMob, setOpenMenuMob] = useState(false);
-  
-  
+
+  useEffect(() => {
+    setIsSignIn(localStorage.getItem('isLogin') === 'true');
+  }, []);
+
   const handleOpenClick = () => {
     setOpenMenuMob(true);
   };
   
   const handleCloseClick = () => {
     setOpenMenuMob(false);
+  };
+
+  const handleLogoutSuccess = () => {
+    setIsSignIn(false);
+    localStorage.removeItem('isLogin');
   };
 
   return (
@@ -37,18 +45,20 @@ export const Header = ({ isSignIn }) => {
           <li>
             <Link className={css.link} to="/">Home</Link>
           </li>
+          
           <li>
             <Link className={css.link} to="/teachers">Teachers</Link>
           </li>
-          <li>
-            <Link className={css.link} to="/favorites">Favorites</Link>
-          </li>
+          {isSignIn ?
+            <li>
+              <Link className={css.link} to="/favorites">Favorites</Link>
+            </li> : null}
         </ul>
       </nav>
       {isSignIn ?
-        <Status isSignIn={true} />
+        (<Status isSignIn={isSignIn} onLogoutSuccess={handleLogoutSuccess}/>)
         :
-        <AuthButtons/>}
+        (<AuthButtons />)}
       
 
       <button className={css.mobileMenuButton} onClick={handleOpenClick} type='button' title='Menu'>
@@ -59,7 +69,7 @@ export const Header = ({ isSignIn }) => {
     
       <StyledEngineProvider injectFirst>
         <Dialog open={openMenuMob} onClose={handleCloseClick} className={css.backdrop}
-          PaperComponent={() => <MenuMob onClose={handleCloseClick} isSignIn={true} />} />
+          PaperComponent={() => <MenuMob onClose={handleCloseClick} isSignIn={isSignIn} />} />
       </StyledEngineProvider>
     </header>
   );

@@ -4,12 +4,12 @@ import { LogOut } from '../../../../../Firebase/User';
 import css from '../LogOut/LogOut.module.css';
 
 
-export const LogOutModal = ({onClose}) => {
+export const LogOutModal = ({onClose, onLogoutSuccess}) => {
   
   
 const handleLogout = async () => {
     await LogOut();
- 
+  onLogoutSuccess();
     onClose(); 
   };
   

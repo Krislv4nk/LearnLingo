@@ -9,11 +9,12 @@ import { Link } from 'react-router-dom';
 import css from './MenuMob.module.css';
 import sprite from '../../../../assets/sprite.svg';
 
-export const MenuMob = ({onClose, isSignIn}) => {
+export const MenuMob = ({onClose}) => {
 const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
  const [openLogOutModal, setOpenLogOutModal] = useState(false);
- const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignIn, setIsSignIn] = useState(localStorage.getItem('isLogin') === 'true');
 
   const openLogOutModalHandler = () => {
     setOpenLogOutModal(true);
@@ -42,7 +43,10 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
     setOpenRegisterModal(false);
     setOpenLoginModal(true);
   };
-  
+  const handleLogoutSuccess = () => {
+    setIsSignIn(false);
+  };
+
   return (
         <div className={css.wrapper}>
         <button className={css.iconClose} onClick={onClose}>
@@ -58,9 +62,10 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
   <li> <Link className={css.link} to="/teachers">
           Teachers
           </Link></li>
-          <li> <Link className={css.link} to="/favorites">
-          Favorites
-        </Link></li>
+          {isSignIn ?
+            <li>
+              <Link className={css.link} to="/favorites">Favorites</Link>
+            </li> : null}
 </ul>
       </nav>
         {isSignIn ? <div className={css.authBox}>
@@ -73,7 +78,7 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
                 </button>
                 <StyledEngineProvider injectFirst>
         <Dialog open={openLogOutModal} onClose={closeModalHandler} className={css.backdrop}
-           PaperComponent={() => <LogOutModal onClose={closeModalHandler}  isSignIn={true}/>} />
+           PaperComponent={() => <LogOutModal onClose={closeModalHandler} isSignUp={isSignUp} onLogoutSuccess={handleLogoutSuccess}/>} />
       </StyledEngineProvider>
             
 </div> : <ul className={css.authBox}>

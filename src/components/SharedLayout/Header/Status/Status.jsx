@@ -6,8 +6,8 @@ import sprite from '../../../../assets/sprite.svg';
 import css from './Status.module.css';
 import { LogOutModal } from '../../Header/Status/LogOut/LogOut';
 
-export const Status = ({isSignIn}) => {
-;
+export const Status = ({ isSignIn, onLogoutSuccess }) => {
+
   const [openLogOutModal, setOpenLogOutModal] = useState(false);
  
 
@@ -30,7 +30,7 @@ export const Status = ({isSignIn}) => {
                 </button>
                 <StyledEngineProvider injectFirst>
         <Dialog open={openLogOutModal} onClose={closeModalHandler} className={css.backdrop}
-           PaperComponent={() => <LogOutModal onClose={closeModalHandler}  isSignIn={isSignIn}/>} />
+           PaperComponent={() => <LogOutModal onClose={closeModalHandler} onLogoutSuccess={onLogoutSuccess} isSignIn={isSignIn}/>} />
       </StyledEngineProvider>
             
 </div>
