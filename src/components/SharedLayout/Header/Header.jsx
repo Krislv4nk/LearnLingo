@@ -3,11 +3,12 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import css from './Header.module.css';
 import sprite from '../../../assets/sprite.svg';
-import { MenuMob } from './MenuMob/MenuMob';
+import { MenuMob } from './MenuMob/MenuMob.jsx';
 import { StyledEngineProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import { AuthButtons } from '../../Auth/AuthButtons/AuthButtons';
-import { Status } from '../Header/Status/Status'
+import { Status } from '../Header/Status/Status';
+import { ThemeProvider } from '../Header/ThemeProvider/ThemeProvider.jsx';
 
 export const Header = () => {
 const [isSignIn, setIsSignIn] = useState(localStorage.getItem('isLogin') === 'true');
@@ -42,6 +43,7 @@ const [isSignIn, setIsSignIn] = useState(localStorage.getItem('isLogin') === 'tr
       </div>
       <nav className={css.nav}>
         <ul className={css.navList}>
+          <ThemeProvider/>
           <li>
             <Link className={css.link} to="/">Home</Link>
           </li>

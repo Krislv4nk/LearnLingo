@@ -6,7 +6,6 @@ import Dialog from '@mui/material/Dialog';
 import { AuthForm } from '../AuthForm/AuthForm';
 import css from './AuthButtons.module.css';
 import sprite from '../../../assets/sprite.svg';
-// import { Status } from '../../SharedLayout/Header/Status/Status';
 
 export const AuthButtons = () => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -38,14 +37,11 @@ export const AuthButtons = () => {
 
   return (
   <div>
-     {/* {isSignIn ? 
-      <Status isSignIn={isSignIn} />
-     :  */}
       <ul className={css.authBox}>
         <li>
           <button onClick={openLoginModalHandler} className={css.logInButton} type='button'>
             <svg className={css.iconLogIn} width={20} height={20}>
-              <use xlinkHref={`${sprite}#icon-log-in`}></use>
+              <use xlinkHref={`${sprite}#icon-login`}></use>
             </svg>
             Log In
           </button>
@@ -64,7 +60,6 @@ export const AuthButtons = () => {
           </StyledEngineProvider>
         </li>
       </ul>
-      {/* } */}
       </div>
   );
 };

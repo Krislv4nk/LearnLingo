@@ -8,6 +8,41 @@
   --price: #38cd3e;
 }
 
+[data-theme="theme1"] {
+  --accentBtn: #F4C550;
+  --accentBg: #fbe9ba;
+  --iconColor: #E7C885;
+  --gradientColor: linear-gradient(180deg, #eeb055 0%, #d08f38 100%);
+}
+
+[data-theme="theme2"] {
+  --accentBtn: #9FBAAE;
+  --accentBg: #CBDED3;
+  --iconColor: #9EB9AD;
+  --gradientColor: linear-gradient(180deg, #295761 0%, #183e49 100%);
+}
+
+[data-theme="theme3"] {
+  --accentBtn: #9fb7ce;
+  --accentBg: #c8dae9;
+  --iconColor: #BFD6EA;
+  --gradientColor: linear-gradient(180deg, #314b6e 0%, #1f385a 100%);
+}
+
+[data-theme="theme4"] {
+  --accentBtn: #e0a39a;
+  --accentBg: #f2c0bd;
+  --iconColor: #DFA299;
+  --gradientColor: linear-gradient(180deg, #b03f3e 0%, #982a27 100%);
+}
+
+[data-theme="theme5"] {
+  --accentBtn: #f0aa8d;
+  --accentBg: #f4c8ba;
+  --iconColor: #EFA98C;
+  --gradientColor: linear-gradient(180deg, #e17650 0%, #ca5b38 100%);
+}
+
 body {
   color: var(--dark-color);
   font-family: 'Roboto', sans-serif;

@@ -98,6 +98,7 @@ height: 60px;
 font-weight: 700;
 font-size: 18px;
 line-height: 156%;
+background: var(--accentBtn);
 color: var(--dark-color);
 }
 

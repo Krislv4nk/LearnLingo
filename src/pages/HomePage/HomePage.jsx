@@ -1,7 +1,8 @@
 
 import { Link } from 'react-router-dom';
-import css from './HomePage.module.css'
-
+import css from './HomePage.module.css';
+import girl from '../../assets/images/girl.png';
+import sprite from '../../assets/sprite.svg';
 
 const HomePage = () => {
     return (
@@ -13,7 +14,15 @@ const HomePage = () => {
                         Elevate your language proficiency to new heights by connecting with highly qualified and experienced tutors.</p>
                     <Link className={css.link} to="/teachers">Get started</Link>
                 </div>
-                <div className={css.imageBg}></div>
+                <div className={css.imageBg}>
+                    <img src={girl} alt="girl" className={css.girl} />
+                   
+                    <div className={css.macBook}>
+                   <svg className={css.apple}>
+          <use xlinkHref={`${sprite}#icon-apple`}></use>
+        </svg>
+                    </div>
+                </div>
             </div>
             <ul className={css.list}>
                 <li className={css.item}><span className={css.itemSpan}>32,000 + </span><p className={css.itemPh}>Experienced tutors</p></li>
@@ -26,3 +35,6 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+//  <stop stopColor="var(--accentBg)" />
+//       <stop offset="1" stopColor="var(--iconColor)" />

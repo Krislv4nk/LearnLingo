@@ -50,12 +50,15 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
   return (
         <div className={css.wrapper}>
         <button className={css.iconClose} onClick={onClose}>
-          <svg width={20} height={20}>
+          <svg  width={20} height={20}>
             <use xlinkHref={`${sprite}#icon-cross`}></use>
           </svg>
         </button>
         <nav className={css.nav}>
-<ul className={css.navList}>
+        <ul className={css.navList}>
+          <li> <button className={css.theme}><svg className={css.themeIcon} width={20} height={20}>
+          <use xlinkHref={`${sprite}#icon-image`}></use>
+        </svg></button></li>
   <li><Link className={css.link} to="/home">
          Home
         </Link></li>
@@ -84,7 +87,7 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
 </div> : <ul className={css.authBox}>
          <li><button className={css.logInButton} onClick={openLoginModalHandler} type='button'>
           <svg className={css.iconLogIn} width={20} height={20}>
-              <use xlinkHref={`${sprite}#icon-log-in`}></use>
+              <use xlinkHref={`${sprite}#icon-login`}></use>
         </svg>Log In</button>
           <StyledEngineProvider injectFirst>
         <Dialog open={openLoginModal} onClose={closeModalHandler} className={css.backdrop}
