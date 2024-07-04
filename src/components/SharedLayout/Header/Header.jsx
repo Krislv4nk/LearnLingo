@@ -46,9 +46,9 @@ export const Header = ({ isSignIn }) => {
         </ul>
       </nav>
       {isSignIn ?
-        <Status isSignIn={isSignIn} />
+        <Status isSignIn={true} />
         :
-        <AuthButtons isSignIn={isSignIn}/>}
+        <AuthButtons/>}
       
 
       <button className={css.mobileMenuButton} onClick={handleOpenClick} type='button' title='Menu'>
@@ -59,7 +59,7 @@ export const Header = ({ isSignIn }) => {
     
       <StyledEngineProvider injectFirst>
         <Dialog open={openMenuMob} onClose={handleCloseClick} className={css.backdrop}
-          PaperComponent={() => <MenuMob onClose={handleCloseClick} />} />
+          PaperComponent={() => <MenuMob onClose={handleCloseClick} isSignIn={true} />} />
       </StyledEngineProvider>
     </header>
   );

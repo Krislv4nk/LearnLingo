@@ -42,6 +42,7 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
     setOpenRegisterModal(false);
     setOpenLoginModal(true);
   };
+  
   return (
         <div className={css.wrapper}>
         <button className={css.iconClose} onClick={onClose}>
