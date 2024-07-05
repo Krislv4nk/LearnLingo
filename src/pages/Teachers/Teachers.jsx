@@ -1,10 +1,13 @@
 
-
+import { Filter } from '../../components/Filter/Filter';
+import { TeachersList } from '../../components/TeachersList/TeachersList';
 
 const Teachers = () => {
     return (
         <div>
-            <h1>Teachers</h1>
+    
+            <Filter />
+            <TeachersList/>
         </div>
     );
 };
