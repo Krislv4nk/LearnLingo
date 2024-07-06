@@ -74,8 +74,3 @@ export const getCurrentUser = () => {
   return null;
 }
 
-export const checkIfUserExists = async (email) => {
-  const auth = getAuth();
-  const userCredential = await auth().fetchSignInMethodsForEmail(email);
-  return userCredential.length > 0;
-};
