@@ -1,0 +1,21 @@
+
+
+@media screen and (min-width: 220px) {
+.pageWrapper {
+     display: flex;
+    flex-direction: column;
+   
+}
+}
+@media screen and (min-width: 834px) {
+   
+}
+
+@media screen and (min-width: 1184px) {
+.pageWrapper {
+    margin: 96px 64px;
+    max-width: 1184px;
+
+}
+
+}

@@ -23,9 +23,10 @@ export const Filter = () => {
       height: '48px',
       backgroundColor: 'var(--white-color)',
       outline: 'none',
-      border: 'none',
+      border: '1px solid var(--accentBtn)',
       display: 'flex',
       alignItems: 'center',
+
     }),
     menu: (provided) => ({
       ...provided,
@@ -34,7 +35,7 @@ export const Filter = () => {
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isSelected ? 'var(--white-color)' : provided.backgroundColor,
-      color: state.isSelected ? 'black' : provided.color,
+      color: state.isSelected ? 'var(--accentBtn)' : provided.color,
     }),
   };
 

@@ -1,7 +1,5 @@
 @media screen and (min-width: 220px) {
-    .wrapper {
-        padding: 20px 30px;
-    }
+   
     .icon {
     fill: var(--dark-color);
 }
@@ -43,17 +41,13 @@ position: relative;
 }
 
 @media screen and (min-width: 834px) {
-    .wrapper {
-        padding: 36px 68px;
-    }
+   
     .list {
         flex-direction: row;
     }
 }
 
-@media screen and (min-width: 1234px) {
-    .wrapper {
-        padding: 96px 128px;
-    }
+@media screen and (min-width: 1184px) {
+    
     
 }

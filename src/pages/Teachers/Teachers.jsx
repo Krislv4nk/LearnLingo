@@ -1,10 +1,11 @@
 
 import { Filter } from '../../components/Filter/Filter';
 import { TeachersList } from '../../components/TeachersList/TeachersList';
+import css from './Teachers.module.css';
 
 const Teachers = () => {
     return (
-        <div>
+        <div className={css.pageWrapper}>
     
             <Filter />
             <TeachersList/>

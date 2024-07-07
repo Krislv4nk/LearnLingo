@@ -1,8 +1,9 @@
 
 import { useState } from 'react';
 import sprite from '../../../assets/sprite.svg';
+import css from './TeacherCard.module.css';
 
-export const TeacherCard = ({ teacher }) => {
+export const TeacherCard = ({ teacher}) => {
   const {
     name,
     surname,
@@ -18,93 +19,111 @@ export const TeacherCard = ({ teacher }) => {
     experience
   } = teacher;
 
-    const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // const isFavorite = Array.isArray(favorites) && favorites.some((fav) => fav.index === teacher.index);
+
+  // const handleFavoriteClick = () => {
+
+  // }
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
     };
     
   return (
-    <li key={teacher.index}>
-      <img src={avatar_url} alt="avatar" />
-      <div>
-        <div>
-          <p>Languages</p>
-          <ul>
-            <li>
-              <svg width={20} height={20}>
+    <li key={teacher.index} className={`${css.itemCard} ${isExpanded ? css.expanded : ''}`}>
+      <div className={css.avatarBorder}>
+        <img className={css.avatar} src={avatar_url} alt="avatar" />
+        </div>
+      <div className={css.infoWrapper}>
+        <div className={css.infoDetails}>
+          <p className={css.lang}>Languages</p>
+          <ul className={css.lessonInfo}>
+            <li className={css.lessonItem}>
+              <svg className={css.bookIcon} width={20} height={20}>
                 <use xlinkHref={`${sprite}#icon-book`}></use>
               </svg>
               Lessons online
             </li>
-            <span></span>
-            <li>
+            <span className={css.spanDeco}></span>
+            <li className={css.lessonItem}>
               <p>Lessons done:</p>{lessons_done}
             </li>
-            <span></span>
-            <li>
+            <span className={css.spanDeco}></span>
+            <li className={css.lessonItem}>
               <svg width={20} height={20}>
                 <use xlinkHref={`${sprite}#icon-star`}></use>
               </svg>
               <p>Rating</p>{rating}
             </li>
-            <span></span>
-            <li>
-              <p>Price / 1 hour</p>{price_per_hour}
+            <span className={css.spanDeco}></span>
+            <li className={css.lessonItem}>
+              <p>Price / 1 hour</p> <span className={css.spanPrice}>{price_per_hour} $</span>
             </li>
           </ul>
-          <button>
-            <svg width={20} height={20}>
+
+          {/* onClick={handleFavoriteClick} */}
+          <button type='button'  className={css.likeButton}>
+            <svg width={20} height={20}
+              // className={isFavorite ? css.svg_heart_red : css.svg_heart}
+            >
               <use xlinkHref={`${sprite}#icon-like`}></use>
             </svg>
           </button>
         </div>
-        <h2>{name} {surname}</h2>
-        <ul>
-          <li>
-            <p><span>Speaks:</span></p>
-            <ul>
+        <h2 className={css.name}>{name} {surname}</h2>
+        <ul className={css.basicInfo}>
+          <li className={css.basicInfoItem}>
+            <div className={css.basicInfoPh}><span className={css.spanBasicInfo}>Speaks: </span>
+            <ul className={css.langList}>
               {languages.map((language, index) => (
-                <li key={index}>{language}</li>
+                <li className={css.langItem} key={index}>{language}</li>
               ))}
-            </ul>
+            </ul></div>
           </li>
-          <li>
-            <p><span>Lesson Info:</span> {lesson_info}</p>
+          <li className={css.basicInfoItem}>
+            <p className={css.basicInfoPh}><span className={css.spanBasicInfo}>Lesson Info:</span> {lesson_info}</p>
           </li>
-          <li>
-            <p><span>Conditions:</span> {conditions}</p>
+          <li className={css.basicInfoItem}>
+            <p className={css.basicInfoPh}><span className={css.spanBasicInfo}>Conditions:</span> {conditions}</p>
           </li>
         </ul>
         {isExpanded && (
           <>
-            <ul>
+            
               <li>
-                <p>{experience}</p>
+                <p className={css.experience}>{experience}</p>
               </li>
-            </ul>
-            <ul>
+           
+            <ul className={css.reviewers}>
               {reviews.map((review, index) => (
                 <li key={index}>
-                  <img src={review.review_avatar} alt="avatar" />
-                  <p>Reviewer: {review.reviewer_name}</p>
-                  <p>Rating: {review.reviewer_rating}</p>
+                  <div className={css.reviewerBox}><span className={css.avatarReviewer}>{review.reviewer_name.charAt(0).toUpperCase()}</span>
+                  <div>
+                  <p>{review.reviewer_name}</p>
+                    <p className={css.rate}><svg width={20} height={20}>
+                <use xlinkHref={`${sprite}#icon-star`}></use>
+              </svg>{review.reviewer_rating.toFixed(2)}</p>
+                    </div></div>
                   <p>{review.comment}</p>
                 </li>
               ))}
                       </ul>
-                      <button type='button'>Book trial lesson</button>
           </>
         )}
     
-        <button onClick={toggleExpand} type='button'>
+        <button className={css.toggleExpand} onClick={toggleExpand} type='button'>
           {isExpanded ? 'Show less' : 'Read more'}
         </button>
-        <ul>
+        <ul className={css.levelsList}>
           {levels.map((level, index) => (
-            <li key={index}>{level}</li>
+            <li className={css.levelsItem} key={index}>{level}</li>
           ))}
         </ul>
+        {isExpanded && (
+          <button type='button' className={css.bookTrialBtn}>Book trial lesson</button>
+        )}
       </div>
     </li>
   );

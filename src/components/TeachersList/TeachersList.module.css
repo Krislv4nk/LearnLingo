@@ -1,3 +1,18 @@
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
 
-
+.loadBtn {
+font-weight: 500;
+font-size: 14px;
+line-height: 129%;
+background-color: var(--accentBtn);
+margin: 0 auto;
+border: none;
+border-radius: 12px;
+padding: 16px 48px;
+width: 183px;
+height: 60px;
+}
