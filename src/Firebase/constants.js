@@ -12,7 +12,7 @@ export const VITE_FIREBASE_MEASUREMENT_ID = "G-W1M1EWXV6T";
 
 
 
-export const language = [
+export const languageOptions = [
     { value: "English", label: "English" },
     { value: "German", label: "German" },
     { value: "Spanish", label: "Spanish" },
@@ -23,7 +23,7 @@ export const language = [
     { value: "Vietnamese", label: "Vietnamese" }
   ];
 
-export const level = [
+export const levelOptions = [
     { value: "A1 Beginner", label: "A1 Beginner" },
     { value: "A2 Elementary", label: "A2 Elementary" },
     { value: "B1 Intermediate", label: "B1 Intermediate" },
@@ -32,7 +32,7 @@ export const level = [
     { value: "C2 Proficient", label: "C2 Proficient" }
   ];
 
-  export const price = [
+  export const priceOptions = [
     { value: "25", label: "25 $" },
     { value: "26", label: "26 $" },
     { value: "27", label: "27 $" },
@@ -44,4 +44,10 @@ export const level = [
     { value: "33", label: "33 $" },
     { value: "34", label: "34 $" },
     { value: "35", label: "35 $" }
-  ];
+];
+  
+
+//  placeholder={"Language"}
+// isClearable = { true}
+// placeholder = { "Level"}
+//             placeholder={"$/hour"}

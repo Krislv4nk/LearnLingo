@@ -26,7 +26,6 @@ export const Filter = () => {
       border: '1px solid var(--accentBtn)',
       display: 'flex',
       alignItems: 'center',
-
     }),
     menu: (provided) => ({
       ...provided,
@@ -39,7 +38,7 @@ export const Filter = () => {
     }),
   };
 
- useEffect(() => {
+  useEffect(() => {
     const fetchData = () => {
       try {
         const languagesRef = ref(database, 'languages');
@@ -66,8 +65,7 @@ export const Filter = () => {
           }
         });
 
-      
-        const pricesRef = ref(database, 'prices');
+        const pricesRef = ref(database, 'price_per_hour');
         onValue(pricesRef, (snapshot) => {
           const pricesData = snapshot.val();
           if (pricesData) {
@@ -79,16 +77,15 @@ export const Filter = () => {
           }
         });
 
-        
         const teachersRef = ref(database, 'teachers');
         onValue(teachersRef, (snapshot) => {
           const teachersData = snapshot.val();
           if (teachersData) {
             const teachersList = Object.keys(teachersData).map(key => ({
               name: teachersData[key].name,
-              language: teachersData[key].language,
-              level: teachersData[key].level,
-              price: teachersData[key].price,
+              language: teachersData[key].languages, 
+              level: teachersData[key].levels,
+              price: teachersData[key].price_per_hour, 
             }));
             setTeachers(teachersList);
           }
@@ -103,26 +100,45 @@ export const Filter = () => {
 
   }, []);
 
-
   return (
     <div className={css.wrapper}>
       <ul className={css.list}>
         <li className={css.item}>
           <label htmlFor="Languages" className={css.label}>Languages</label>
-          <Select styles={customStyles} value={selectedLanguage} onChange={setSelectedLanguage} options={languageOptions} />
+          <Select
+            styles={customStyles}
+            placeholder={"Language"}
+            isClearable={true}
+            value={selectedLanguage}
+            onChange={option => setSelectedLanguage(option)}
+            options={languageOptions}
+          />
         </li>
         <li className={css.item}>
           <label className={css.label} htmlFor="Level of knowledge">Level of knowledge</label>
-          <Select styles={customStyles} value={selectedLevel} onChange={setSelectedLevel} options={levelOptions} />
+          <Select
+            styles={customStyles}
+            placeholder={"Level"}
+            isClearable={true}
+            value={selectedLevel}
+            onChange={option => setSelectedLevel(option)}
+            options={levelOptions}
+          />
         </li>
         <li className={css.item}>
           <label className={css.label} htmlFor="Price">Price</label>
-          <Select styles={customStyles} value={selectedPrice} onChange={setSelectedPrice} options={priceOptions} />
+          <Select
+            styles={customStyles}
+            placeholder={"$/hour"}
+            isClearable={true}
+            value={selectedPrice}
+            onChange={option => setSelectedPrice(option)}
+            options={priceOptions}
+          />
         </li>
       </ul>
-
-      
     </div>
   );
 };
+
 

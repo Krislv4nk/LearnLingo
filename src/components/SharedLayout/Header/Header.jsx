@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import css from './Header.module.css';
 import sprite from '../../../assets/sprite.svg';
 import { MenuMob } from './MenuMob/MenuMob.jsx';
@@ -45,15 +45,18 @@ const [isSignIn, setIsSignIn] = useState(localStorage.getItem('isLogin') === 'tr
         <ul className={css.navList}>
           <ThemeProvider/>
           <li>
-            <Link className={css.link} to="/">Home</Link>
+            <NavLink className={({ isActive }) =>
+              `${css.link} ${isActive ? css.active : ''}`} to="/">Home</NavLink>
           </li>
           
           <li>
-            <Link className={css.link} to="/teachers">Teachers</Link>
+            <NavLink className={({ isActive }) =>
+              `${css.link} ${isActive ? css.active : ''}`} to="/teachers">Teachers</NavLink>
           </li>
           {isSignIn ?
             <li>
-              <Link className={css.link} to="/favorites">Favorites</Link>
+              <NavLink className={({ isActive }) =>
+              `${css.link} ${isActive ? css.active : ''}`} to="/favorites">Favorites</NavLink>
             </li> : null}
         </ul>
       </nav>

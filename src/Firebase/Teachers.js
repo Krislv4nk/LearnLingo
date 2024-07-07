@@ -18,10 +18,10 @@ export const getAllTeachers = async () => {
     if (snapshot.exists()) {
       return snapshot.val();
     } else {
-      throw new Error('Дані про вчителі відсутні');
+      throw new Error('Data is not available');
     }
   } catch (error) {
-    console.error('Помилка при отриманні даних про вчителі:', error);
+    console.error('Error during fetching:', error);
     throw error;
   }
 };
