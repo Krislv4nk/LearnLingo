@@ -1,8 +1,5 @@
 // import { ref, set, child, get } from "firebase/database";
 // import { getCurrentUser } from "./User";
-// import { database } from './Firebase';
-
-
 
 
 import { database } from './Firebase'; 
@@ -17,31 +14,73 @@ export const getAllTeachers = async () => {
     const snapshot = await get(teachersRef);
     if (snapshot.exists()) {
       return snapshot.val();
-    } else {
-      throw new Error('Data is not available');
-    }
+    } 
   } catch (error) {
     console.error('Error during fetching:', error);
-    throw error;
   }
 };
 
-// export const getAllTeachers = async () => {
-//   try {
-//     const databaseRef = ref(database);
-//     const result = await get((databaseRef, "teachers"));
-//     const teachersData = result.val();
-//     if (Array.isArray(teachersData)) {
-//       const prevTeachers = teachersData.slice(0);
-//       return prevTeachers;
-//     } else {
-//       console.error("Teachers data is not an array");
-//       return [];
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+export const getTeachersByLanguage = async (language) => {
+  try {
+    const teachersRef = ref(database, '/teachers');
+    const snapshot = await get(teachersRef);
+    if (snapshot.exists()) {
+      const teachers = snapshot.val();
+      const filteredTeachersByLanguage = Object.values(teachers).filter(teacher => {
+        return Array.isArray(teacher.languages) ? teacher.languages.includes(language) : teacher.languages === language;
+      });
+      console.log(filteredTeachersByLanguage);
+      return filteredTeachersByLanguage;
+    } 
+  } catch (error) {
+    console.error('Error during fetching:', error);
+  }
+};
+
+export const getTeachersByLevel = async (levels) => {
+  try {
+    const teachersRef = ref(database, '/teachers');
+    const snapshot = await get(teachersRef);
+    
+    if (snapshot.exists()) {
+      const teachers = snapshot.val();
+
+      const filteredTeachersByLevel = Object.values(teachers).filter((teacher) => {
+         
+        return Array.isArray(teacher.levels) ? teacher.levels.includes(levels) : teacher.levels === levels;
+      });
+
+      console.log(filteredTeachersByLevel);
+      return filteredTeachersByLevel;
+    } 
+  } catch (error) {
+    console.error('Error during fetching:', error);
+  }
+};
+
+
+export const getTeachersByPrice = async (price) => {
+  try {
+    const teachersRef = ref(database, '/teachers');
+    const snapshot = await get(teachersRef);
+    
+    if (snapshot.exists()) {
+      const teachers = snapshot.val();
+
+      const filteredTeachersByPrice = Object.values(teachers).filter(teacher => {
+       
+        return teacher.price_per_hour === +price;
+      });
+
+      console.log(filteredTeachersByPrice);
+      return filteredTeachersByPrice;
+    } 
+  } catch (error) {
+    console.error('Error during fetching:', error);
+  }
+}
+
+
 
 // export const addTeacher = async (objectTeacher) => {
 //   try {

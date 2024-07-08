@@ -11,10 +11,10 @@
    
 }
 
-@media screen and (min-width: 1184px) {
+@media screen and (min-width: 1440px) {
 .pageWrapper {
     margin: 96px 64px;
-    max-width: 1184px;
+    max-width: 1440px;
 
 }
 

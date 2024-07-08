@@ -1,18 +1,65 @@
 
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import Select from 'react-select';
-import { database } from '../../Firebase/Firebase';
-import { ref, onValue } from 'firebase/database';
+import { getTeachersByLanguage, getTeachersByLevel, getTeachersByPrice } from '../../Firebase/Teachers';
+import { v4 as uuidv4 } from 'uuid';
+import { languageOptions, levelOptions, priceOptions } from '../../Firebase/constants';
+import { TeacherCard } from '../TeachersList/TeacherCard/TeacherCard';
 import css from './Filter.module.css';
 
-export const Filter = () => {
-  const [languageOptions, setLanguageOptions] = useState([]);
-  const [levelOptions, setLevelOptions] = useState([]);
-  const [priceOptions, setPriceOptions] = useState([]);
-  const [teachers, setTeachers] = useState([]);
+export const Filter = ({ onApply }) => {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
-  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [selectedLevel, setSelectedLevel] = useState(null); 
   const [selectedPrice, setSelectedPrice] = useState(null);
+  const [filteredTeachers, setFilteredTeachers] = useState([]);
+  
+
+  const handleChangeLanguage = async (selectedOption) => {
+    setSelectedLanguage(selectedOption);
+     if (selectedOption && selectedOption.value) {
+      try {
+        const teachers = await getTeachersByLanguage(selectedOption.value);
+        setFilteredTeachers(teachers);
+        onApply(selectedOption);
+      } catch (error) {
+        console.error('Error fetching filtered teachers:', error);
+      }
+    } else {
+      setFilteredTeachers([]);
+    }
+  };
+
+  const handleChangeLevel = async (selectedOption) => {
+  setSelectedLevel(selectedOption);
+  if (selectedOption && selectedOption.value) {
+    try {
+      const teachers = await getTeachersByLevel(selectedOption.value);
+      setFilteredTeachers(teachers);
+      onApply(selectedOption);
+    } catch (error) {
+      console.error('Error fetching filtered teachers:', error);
+    }
+  } else {
+    setFilteredTeachers([]);
+  }
+};
+
+const handleChangePrice = async (selectedOption) => {
+  setSelectedPrice(selectedOption);
+  if (selectedOption && selectedOption.value) {
+    try {
+      const teachers = await getTeachersByPrice(selectedOption.value);
+      setFilteredTeachers(teachers);
+      onApply(selectedOption);
+    } catch (error) {
+      console.error('Error fetching filtered teachers:', error);
+    }
+  } else {
+    setFilteredTeachers([]);
+  }
+  };
+  
 
   const customStyles = {
     control: (provided) => ({
@@ -38,67 +85,9 @@ export const Filter = () => {
     }),
   };
 
-  useEffect(() => {
-    const fetchData = () => {
-      try {
-        const languagesRef = ref(database, 'languages');
-        onValue(languagesRef, (snapshot) => {
-          const languagesData = snapshot.val();
-          if (languagesData) {
-            const options = Object.keys(languagesData).map(key => ({
-              value: key,
-              label: languagesData[key].label,
-            }));
-            setLanguageOptions(options);
-          }
-        });
-
-        const levelsRef = ref(database, 'levels');
-        onValue(levelsRef, (snapshot) => {
-          const levelsData = snapshot.val();
-          if (levelsData) {
-            const options = Object.keys(levelsData).map(key => ({
-              value: key,
-              label: levelsData[key].label,
-            }));
-            setLevelOptions(options);
-          }
-        });
-
-        const pricesRef = ref(database, 'price_per_hour');
-        onValue(pricesRef, (snapshot) => {
-          const pricesData = snapshot.val();
-          if (pricesData) {
-            const options = Object.keys(pricesData).map(key => ({
-              value: key,
-              label: pricesData[key].label,
-            }));
-            setPriceOptions(options);
-          }
-        });
-
-        const teachersRef = ref(database, 'teachers');
-        onValue(teachersRef, (snapshot) => {
-          const teachersData = snapshot.val();
-          if (teachersData) {
-            const teachersList = Object.keys(teachersData).map(key => ({
-              name: teachersData[key].name,
-              language: teachersData[key].languages, 
-              level: teachersData[key].levels,
-              price: teachersData[key].price_per_hour, 
-            }));
-            setTeachers(teachersList);
-          }
-        });
-
-      } catch (error) {
-        console.error('Error fetching data from Realtime Database:', error);
-      }
-    };
-
-    fetchData();
-
-  }, []);
+  const loadMoreTeachers = () => {
+    setFilteredTeachers(prevFilteredTeachers => [...prevFilteredTeachers, ...prevFilteredTeachers.slice(0, 4)]);
+  };
 
   return (
     <div className={css.wrapper}>
@@ -110,7 +99,7 @@ export const Filter = () => {
             placeholder={"Language"}
             isClearable={true}
             value={selectedLanguage}
-            onChange={option => setSelectedLanguage(option)}
+            onChange={handleChangeLanguage}
             options={languageOptions}
           />
         </li>
@@ -121,7 +110,7 @@ export const Filter = () => {
             placeholder={"Level"}
             isClearable={true}
             value={selectedLevel}
-            onChange={option => setSelectedLevel(option)}
+            onChange={handleChangeLevel}
             options={levelOptions}
           />
         </li>
@@ -132,13 +121,26 @@ export const Filter = () => {
             placeholder={"$/hour"}
             isClearable={true}
             value={selectedPrice}
-            onChange={option => setSelectedPrice(option)}
+            onChange={handleChangePrice}
             options={priceOptions}
           />
         </li>
       </ul>
+      <div className={css.listWrapper}>
+        <ul>
+          {filteredTeachers.map(teacher => (
+      <TeacherCard key={uuidv4()} teacher={teacher} />
+          ))}
+        </ul>
+        {filteredTeachers.length > 0 && filteredTeachers.length % 4 === 0 && (
+        <button className={css.loadBtn} type='button' onClick={loadMoreTeachers}>
+          Load more
+        </button>
+      )}
+      </div>
     </div>
   );
 };
+
 
 

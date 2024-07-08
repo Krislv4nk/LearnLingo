@@ -47,7 +47,3 @@ export const levelOptions = [
 ];
   
 
-//  placeholder={"Language"}
-// isClearable = { true}
-// placeholder = { "Level"}
-//             placeholder={"$/hour"}

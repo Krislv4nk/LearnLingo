@@ -23,7 +23,7 @@ export const TeachersList = () => {
 
   return (
     <div className={css.wrapper}>
-      <ul>
+      <ul className={css.list}>
         {teachers.slice(0, visibleTeachers).map((teacher, index) => (
             <TeacherCard key={index} teacher={teacher} />
         ))}
