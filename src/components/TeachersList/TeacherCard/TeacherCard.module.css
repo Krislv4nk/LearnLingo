@@ -10,9 +10,9 @@ background: var(--accentBg);
 margin-bottom: 32px;
 display: flex;
 flex-direction: column;
-justify-content: center;
 align-items: center;
 gap: 48px;
+position: relative;
 }
 .avatarBorder {
     border: 3px solid var(--accentBtn);
@@ -20,7 +20,6 @@ border-radius: 50%;
 width: 120px;
 height: 120px;
 position: relative;
-
 display: flex;
 justify-content: center;
 align-items: center;
@@ -61,7 +60,7 @@ display: none;
 .lessonInfo {
     display: flex;
     flex-direction: column;
-    
+    gap: 8px;
 }
 .bookIcon {
     fill: transparent;
@@ -86,8 +85,12 @@ font-size: 16px;
 .likeButton {
     border: none;
     background-color: transparent;
+    position: absolute;
+  top: 24px;
+  right: 24px;
 }
 .name {
+    margin-top: 32px;
 font-weight: 500;
 font-size: 24px;
 line-height: 100%;
@@ -163,7 +166,7 @@ height: 32px;
 background-color: var(--accentBtn);
 }
 .itemCard.expanded {
-height: max-content;
+height: auto;
 background-color: var(--accentBg);
 }
 .experience {
@@ -182,6 +185,9 @@ margin-bottom: 48px;
     gap: 12px;
     align-items: center;
     margin-bottom: 16px;
+}
+.reviewName {
+    margin-bottom: 8px;
 }
 .rate {
     display: flex;
@@ -218,24 +224,118 @@ font-size: 16px;
 line-height: 156%;
 }
 .svg_heart {
-  fill: transparent;
-  stroke: var(--primary-color-black);
+   fill: transparent;
+  stroke: var(--dark-color);
 }
 
 .svg_heart_red {
-  fill: var(--primary-color-red);
-  stroke: var(--primary-color-red);
+  fill: rgb(245, 6, 6);
+  stroke: rgb(245, 6, 6);
+}
+.spanDeco::before {
+    display: none;
 }
 }
 
-@media screen and (min-width: 734px) {
+@media screen and (min-width: 768px) {
+    .itemCard {
+width: 700px;
+height: 670px;
+}
+
+.infoWrapper {
+display: flex;
+flex-direction: column;
+}
+
+
+.lessonInfo {
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.basicInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.basicInfoItem {
+    display: flex;
+    flex-direction: row;
+    margin-right: 5px;
+}
+.langList {
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.langItem {
+margin-right: 5px;
+font-weight: 500;
+font-size: 16px;
+line-height: 150%;
+text-decoration: underline;
+text-decoration-skip-ink: none;
+}
+
+.langItem:not(:last-child)::after {
+    content: ',';
+    
+}
+.spanBasicInfo {
+    margin-right: 5px;
+font-weight: 500;
+font-size: 16px;
+line-height: 150%;
+color: var(--gray);
+}
+.toggleExpand {
+    text-decoration: underline;
+text-decoration-skip-ink: none;
+border: none;
+background-color: transparent;
+font-weight: 500;
+font-size: 16px;
+line-height: 150%;
+padding: 0;
+margin-top: 0px;
+margin-bottom: 32px;
+margin-left: 0px;
+margin-right: auto;
+}
+.levelsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.levelsItem {
+border-radius: 35px;
+padding: 8px 12px;
+width: auto;
+height: 32px;
+background-color: var(--accentBtn);
+}
+.itemCard.expanded {
+height: auto;
+width: 700;
+background-color: var(--accentBg);
+}
+.experience {
+width: 652px;
+margin-bottom: 32px;
+}
+
+.bookTrialBtn {
+   margin-left: 0px;
+   margin-bottom: 0px;
+}
    
 }
 
-@media screen and (min-width: 1234px) {
+@media screen and (min-width: 1440px) {
 .itemCard {
-    
-padding: 24px;
 width: 1184px;
 height: 328px;
 flex-direction: row;
@@ -243,53 +343,30 @@ flex-direction: row;
 .avatarBorder {
 align-self: flex-start;
 }
-.avatar {
-    border-radius: 50%;
-width: 96px;
-height: 96px;
-object-fit: cover;
-}
-.avatarBorder::after {
-    content: '';
-    position: absolute;
-    transform: translate(-25%, -25%);
-    top: 18px;
-    right: 20px;
-    width: 12px; 
-    height: 12px;
-    border: 1px solid white; 
-    background-color: #38cd3e;
-    border-radius: 50%;
-}
 .infoWrapper {
 display: flex;
 flex-direction: column;
 }
 .infoDetails {
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 8px;
 }
 .lang {
-    
+    display: block;
 font-weight: 500;
 font-size: 16px;
 line-height: 150%;
 color: var(--gray);
 }
 .lessonInfo {
-    display: flex;
+    
     flex-direction: row;
     gap: 16px;
     justify-content: center;
     align-items: center;
-    margin-left: 149px;
+    margin-left: 169px;
 }
-.bookIcon {
-    fill: transparent;
-    stroke: black;
-}
+
 .lessonItem {
     display: flex;
     justify-content: center;
@@ -312,8 +389,10 @@ font-size: 16px;
     margin-left: 64px;
     border: none;
     background-color: transparent;
+    position: static;
 }
 .name {
+    margin-top: 0px;
 font-weight: 500;
 font-size: 24px;
 line-height: 100%;
@@ -371,6 +450,7 @@ font-weight: 500;
 font-size: 16px;
 line-height: 150%;
 padding: 0;
+margin-top: 0px;
 margin-bottom: 32px;
 margin-left: 0px;
 margin-right: auto;
@@ -388,56 +468,19 @@ height: 32px;
 background-color: var(--accentBtn);
 }
 .itemCard.expanded {
-height: max-content;
+height: auto;
+width: 1184px;
 background-color: var(--accentBg);
 }
 .experience {
 width: 968px;
 margin-bottom: 32px;
 }
-.reviewers {
-height: 200px;
-gap: 32px;
-display: flex;
-flex-direction: column;
-margin-bottom: 48px;
-}
-.reviewerBox {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-bottom: 16px;
-}
-.rate {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    font-weight: 500;
-font-size: 14px;
-line-height: 129%;
-}
-.avatarReviewer {
-    border-radius: 60px;
-width: 60px;
-height: 60px;
-display: flex;
-background-color: var( --iconColor);
-    justify-content: center;
-    align-items: center;
-    font-weight: 700;
-    font-size: 20px;
-    color: var(--dark-color);
-}
+
 .bookTrialBtn {
-   margin-top: 32px;
-   border-radius: 12px;
-   border: none;
-padding: 16px 48px;
-width: 232px;
-height: 60px;
-background-color: var(--accentBtn);
-font-weight: 700;
-font-size: 16px;
-line-height: 156%;
+   margin-left: 0px;
+   margin-bottom: 0px;
 }
 }
+
+

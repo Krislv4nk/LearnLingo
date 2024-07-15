@@ -7,15 +7,15 @@
     background-color: transparent;
     border: none;
     fill: var(--accentBtn);
+    padding: 0px;
   }
   .header {
-    max-width: 1184px;
+    width: 280px;
 height: 48px;
-margin: 20px auto;
 padding: 10px 20px;
 display: flex;
 justify-content: space-between;
-align-items: center;
+margin-bottom: 32px;
 }
 .logoLink {
     display: flex;
@@ -42,9 +42,23 @@ color: var(--dark-color);
 
 }
 
+@media screen and (min-width: 768px) {
+ 
+.header {
+    width: 700px;
+}
+}
 
-@media screen and (min-width: 1234px) {
-
+@media screen and (min-width: 1440px) {
+.header {
+    width: 1184px;
+height: 48px;
+margin: 20px auto;
+padding: 10px 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
     .nav {
     display: block;
 }

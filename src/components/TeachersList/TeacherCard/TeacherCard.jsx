@@ -65,7 +65,7 @@ export const TeacherCard = ({ teacher}) => {
 
           {/* onClick={handleFavoriteClick} */}
           <button type='button'  className={css.likeButton}>
-            <svg width={20} height={20}
+            <svg width={20} height={20} className={css.svg_heart}
               // className={isFavorite ? css.svg_heart_red : css.svg_heart}
             >
               <use xlinkHref={`${sprite}#icon-like`}></use>
@@ -90,18 +90,15 @@ export const TeacherCard = ({ teacher}) => {
           </li>
         </ul>
         {isExpanded && (
-          <>
-            
-              <li>
+          <div>
                 <p className={css.experience}>{experience}</p>
-              </li>
-           
+             
             <ul className={css.reviewers}>
               {reviews.map((review, index) => (
                 <li key={index}>
                   <div className={css.reviewerBox}><span className={css.avatarReviewer}>{review.reviewer_name.charAt(0).toUpperCase()}</span>
                   <div>
-                  <p>{review.reviewer_name}</p>
+                  <p className={css.reviewName}>{review.reviewer_name}</p>
                     <p className={css.rate}><svg width={20} height={20}>
                 <use xlinkHref={`${sprite}#icon-star`}></use>
               </svg>{review.reviewer_rating.toFixed(2)}</p>
@@ -110,7 +107,7 @@ export const TeacherCard = ({ teacher}) => {
                 </li>
               ))}
                       </ul>
-          </>
+          </div>
         )}
     
         <button className={css.toggleExpand} onClick={toggleExpand} type='button'>

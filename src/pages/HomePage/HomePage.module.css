@@ -124,34 +124,7 @@ background: var(--gradientColor);
 }
 }
 
-@media screen and (min-width: 520px) {
-    .mainBox {
-        width: 500px;
-height: 430px;
-    }
-    .info {
-        width: 371px;
-    }
-   .imageBg {
-width: 500px;
-height: 430px;
-   } 
-   .list {
-width: 500px;
-height: auto;
-flex-direction: row;
-flex-wrap: wrap;
-padding: 70px;
-}
-.girl {
-    width: 259px;
-height: 259px;
-}
-.macBook {
-    bottom: -12px;
-    margin-top: -26px;
-}
-}
+
 @media screen and (min-width: 768px) {
      .mainBox {
         padding: 32px 64px;
@@ -201,7 +174,7 @@ height: 539px;
 }
 }
 
-@media screen and (min-width: 1320px) {
+@media screen and (min-width: 1440px) {
     
 .mainContentWrapper {
     flex-direction: row;

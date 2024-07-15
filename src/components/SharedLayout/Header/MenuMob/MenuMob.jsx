@@ -8,6 +8,7 @@ import { AuthForm } from '../../../Auth/AuthForm/AuthForm';
 import { Link } from 'react-router-dom';
 import css from './MenuMob.module.css';
 import sprite from '../../../../assets/sprite.svg';
+import { ThemeProvider } from '../ThemeProvider/ThemeProvider';
 
 export const MenuMob = ({onClose}) => {
 const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -56,9 +57,7 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
         </button>
         <nav className={css.nav}>
         <ul className={css.navList}>
-          <li> <button className={css.theme}><svg className={css.themeIcon} width={20} height={20}>
-          <use xlinkHref={`${sprite}#icon-image`}></use>
-        </svg></button></li>
+          <ThemeProvider/>
   <li><Link className={css.link} to="/home">
          Home
         </Link></li>
