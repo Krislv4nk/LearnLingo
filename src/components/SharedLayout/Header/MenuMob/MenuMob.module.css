@@ -96,6 +96,19 @@ transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 .registrButton:focus {
     background-color: var(--form);
 }
+.logOutButton {
+  font-weight: 700;
+font-size: 16px;
+line-height: 1.25;
+color: var(--white-color);
+background-color: var(--accentBtn);
+border-radius: 12px;
+padding: 14px 39px;
+width: 160px;
+height: 48px;
+cursor: pointer;
+transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
 .theme {
   background-color: transparent;
   border: none;

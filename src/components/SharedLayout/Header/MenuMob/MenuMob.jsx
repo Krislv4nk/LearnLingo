@@ -75,7 +75,7 @@ const [openLoginModal, setOpenLoginModal] = useState(false);
           <svg className={css.iconLogIn} width={20} height={20}>
               <use xlinkHref={`${sprite}#icon-user`}></use>
         </svg>Your profile</button>
-            <button onClick={openLogOutModalHandler} className={css.registrButton} type='button'>
+            <button onClick={openLogOutModalHandler} className={css.logOutButton} type='button'>
            LogOut
                 </button>
                 <StyledEngineProvider injectFirst>
