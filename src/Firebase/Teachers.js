@@ -1,9 +1,9 @@
-// import { ref, set, child, get } from "firebase/database";
-// import { getCurrentUser } from "./User";
+
+import { getCurrentUser } from "./User";
 
 
 import { database } from './Firebase'; 
-import { ref, get } from 'firebase/database';
+import { ref, get, set, child } from 'firebase/database';
 
 
 
@@ -82,46 +82,46 @@ export const getTeachersByPrice = async (price) => {
 
 
 
-// export const addTeacher = async (objectTeacher) => {
-//   try {
-//     const userData = getCurrentUser();
-//     const userId = userData?.uid;
-//     let teachersArray =
-//       (await get(ref(database, `users/${userId}/teachers`))).val() || [];
-//     if (!Array.isArray(teachersArray)) {
-//       teachersArray = [];
-//     }
-//     teachersArray.push(objectTeacher);
-//     await set(ref(database, `users/${userId}/teachers`), teachersArray);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+export const addToFavorites = async (objectTeacher) => {
+  try {
+    const userData = getCurrentUser();
+    const userId = userData?.uid;
+    let teachersArray =
+      (await get(ref(database, `users/${userId}/teachers`))).val() || [];
+    if (!Array.isArray(teachersArray)) {
+      teachersArray = [];
+    }
+    teachersArray.push(objectTeacher);
+    await set(ref(database, `users/${userId}/teachers`), teachersArray);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-// export const removeTeacher = async (teacherID) => {
-//   try {
-//     const userData = getCurrentUser();
-//     const userId = userData?.uid;
-//     const arrayFavorites = await getFavorites();
-//     const updatedFavorites = arrayFavorites?.filter(
-//       (favorite) => favorite.id !== teacherID
-//     );
-//     await set(ref(database, `users/${userId}/teachers`), updatedFavorites);
-//     return updatedFavorites;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+export const removeFromFavorites = async (teacherID) => {
+  try {
+    const userData = getCurrentUser();
+    const userId = userData?.uid;
+    const arrayFavorites = await getFavoriteTeachers();
+    const updatedFavorites = arrayFavorites?.filter(
+      (favorite) => favorite.id !== teacherID
+    );
+    await set(ref(database, `users/${userId}/teachers`), updatedFavorites);
+    return updatedFavorites;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-// export const getFavorites = async () => {
-//   try {
-//     const userData = getCurrentUser();
-//     const userId = userData?.uid;
-//     const result = await get(child(ref(database), `users/${userId}/teachers`));
-//     return result.val();
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+export const getFavoriteTeachers = async () => {
+  try {
+    const userData = getCurrentUser();
+    const userId = userData?.uid;
+    const result = await get(child(ref(database), `users/${userId}/teachers`));
+    return result.val();
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 

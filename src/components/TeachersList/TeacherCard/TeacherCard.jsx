@@ -1,9 +1,11 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import sprite from '../../../assets/sprite.svg';
 import css from './TeacherCard.module.css';
+import { getFavoriteTeachers, addToFavorites, removeFromFavorites } from '../../../Firebase/Teachers';
 
-export const TeacherCard = ({ teacher}) => {
+
+export const TeacherCard = ({ userId, teacher }) => {
   const {
     name,
     surname,
@@ -16,16 +18,40 @@ export const TeacherCard = ({ teacher}) => {
     avatar_url,
     lesson_info,
     conditions,
-    experience
+    experience,
+    index
   } = teacher;
 
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // const isFavorite = Array.isArray(favorites) && favorites.some((fav) => fav.index === teacher.index);
+  const [favorites, setFavorites] = useState([]);
 
-  // const handleFavoriteClick = () => {
+  useEffect(() => {
+  const fetchFavorites = async () => {
+    try {
+      const favoriteTeachers = await getFavoriteTeachers(userId); 
+      setFavorites(favoriteTeachers);
+    } catch (error) {
+      console.error('Error fetching favorite teachers:', error);
+    }
+  };
 
-  // }
+  fetchFavorites();
+}, [userId]);
+
+  const isFavorite = favorites && favorites.some(fav => fav.index === index);
+
+ const handleFavoriteClick = async () => {
+  if (isFavorite) {
+    await removeFromFavorites(userId, index);
+    setFavorites(favorites.filter(fav => fav.index !== index));
+  } else {
+    await addToFavorites(userId, index); 
+    setFavorites([...favorites, teacher]);
+  }
+};
+
+
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -63,10 +89,10 @@ export const TeacherCard = ({ teacher}) => {
             </li>
           </ul>
 
-          {/* onClick={handleFavoriteClick} */}
-          <button type='button'  className={css.likeButton}>
-            <svg width={20} height={20} className={css.svg_heart}
-              // className={isFavorite ? css.svg_heart_red : css.svg_heart}
+          
+          <button type='button'  className={css.likeButton} onClick={handleFavoriteClick}>
+            <svg width={20} height={20} 
+              className={isFavorite ? css.svg_heart_red : css.svg_heart}
             >
               <use xlinkHref={`${sprite}#icon-like`}></use>
             </svg>
