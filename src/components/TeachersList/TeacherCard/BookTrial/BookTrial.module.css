@@ -1,0 +1,171 @@
+
+@media screen and (min-width: 220px) {
+    .wrapper {
+   border-radius: 30px;
+width: 300px;
+height: auto;
+background: #fff;
+padding: 24px;
+position: relative;
+overflow: auto;
+}
+.closeBtn {
+               cursor: pointer;
+               content: "";
+               border: none;
+                display: flex;
+               justify-content: center;
+               align-items: center;
+width: 40px;
+  height: 40px;
+    position: absolute;
+    top: 20px;
+right: 20px;
+    cursor: pointer;
+}
+.cross {
+  width: 32px;
+  height: 32px;
+  stroke: black;
+}
+.title {
+font-weight: 500;
+font-size: 40px;
+line-height: 120%;
+letter-spacing: -0.02em;
+margin-bottom: 20px;
+}
+.info {
+font-weight: 400;
+font-size: 16px;
+line-height: 137%;
+color: var(--form);
+margin-bottom: 20px;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    margin-bottom: 40px;
+}
+.avatar {
+    border-radius: 100px;
+width: 44px;
+height: 44px;
+}
+.nameBox {
+display: flex;
+flex-direction: column;
+gap: 4px;
+}
+.name {
+font-weight: 500;
+font-size: 16px;
+line-height: 150%;
+}
+.teacher {
+font-weight: 500;
+font-size: 12px;
+line-height: 133%;
+color: #8a8a89;
+}
+
+
+.radioWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+}
+.radioLabel {
+    display: flex;
+    gap: 8px;
+font-weight: 400;
+font-size: 16px;
+line-height: 137%;
+text-align: center;
+}
+.goals {
+font-weight: 500;
+font-size: 24px;
+line-height: 133%;
+margin-bottom: 20px;
+}
+.radio {
+    display: none;
+}
+.customRadio {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--accentBtn);
+    background: white;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.customRadio::before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    background: var(--accentBtn);
+    border-radius: 50%;
+    display: none;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+}
+.radio:checked + .customRadio::before {
+    display: block;
+}
+.error {
+    font-weight: 400;
+font-size: 16px;
+line-height: 137%;
+color: red;
+margin: 10px 0px;
+}
+.input {
+    border: 1px solid rgba(18, 20, 23, 0.1);
+border-radius: 12px;
+padding: 16px 18px;
+width: 252px;
+height: 54px;
+margin-bottom: 18px;
+}
+.input::placeholder {
+font-weight: 400;
+font-size: 16px;
+line-height: 137%;
+}
+.bookBtn {
+    margin-top: 22px;
+    border-radius: 12px;
+padding: 16px;
+width: 252px;
+height: 60px;
+background: var(--accentBtn);
+font-weight: 700;
+font-size: 18px;
+line-height: 156%;
+border: none;
+}
+}
+
+
+@media screen and (min-width: 768px) {
+.wrapper {
+width: 599px;
+height: 971px;
+padding: 64px;
+}
+.input {
+width: 472px;
+}
+
+.bookBtn {
+width: 472px;
+}
+}

@@ -3,9 +3,13 @@ import { useState, useEffect } from 'react';
 import sprite from '../../../assets/sprite.svg';
 import css from './TeacherCard.module.css';
 import { getFavoriteTeachers, addToFavorites, removeFromFavorites } from '../../../Firebase/Teachers';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { StyledEngineProvider } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import { ModalForAuthenticate} from '../../Auth/ModalForAuthenticate/ModalForAuthenticate';
+import { BookTrial } from './BookTrial/BookTrial';
 
-
-export const TeacherCard = ({ userId, teacher }) => {
+export const TeacherCard = ({ teacher }) => {
   const {
     name,
     surname,
@@ -23,34 +27,67 @@ export const TeacherCard = ({ userId, teacher }) => {
   } = teacher;
 
   const [isExpanded, setIsExpanded] = useState(false);
-
   const [favorites, setFavorites] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [openBookTrial, setOpenBookTrial] = useState(false);
+
 
   useEffect(() => {
-  const fetchFavorites = async () => {
+    const fetchFavorites = async () => {
+      try {
+        const favoriteTeachers = await getFavoriteTeachers();
+        setFavorites(favoriteTeachers);
+        setIsFavorite(favoriteTeachers.some(fav => fav.index === index));
+      } catch (error) {
+        console.error('Error fetching favorite teachers:', error);
+      }
+    };
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+        fetchFavorites();
+      } else {
+        setIsAuthenticated(false);
+      }
+    });
+  }, [index]);
+
+  const handleFavoriteButtonClick = async () => {
+    if (!isAuthenticated) {
+      setOpenModal(true);
+      return;
+    }
+
     try {
-      const favoriteTeachers = await getFavoriteTeachers(userId); 
-      setFavorites(favoriteTeachers);
+      if (isFavorite) {
+        await removeFromFavorites(index);
+        setFavorites(favorites.filter(fav => fav.index !== index));
+      } else {
+        await addToFavorites(teacher);
+        setFavorites([...favorites, teacher]);
+      }
+      setIsFavorite(!isFavorite);
     } catch (error) {
-      console.error('Error fetching favorite teachers:', error);
+      console.error('Error handling favorite click:', error);
     }
   };
 
-  fetchFavorites();
-}, [userId]);
+  const closeModalHandler = () => {
+    setOpenModal(false);
+  };
 
-  const isFavorite = favorites && favorites.some(fav => fav.index === index);
-
- const handleFavoriteClick = async () => {
-  if (isFavorite) {
-    await removeFromFavorites(userId, index);
-    setFavorites(favorites.filter(fav => fav.index !== index));
-  } else {
-    await addToFavorites(userId, index); 
-    setFavorites([...favorites, teacher]);
+  const openBookTrialHandler = () => {
+    setOpenBookTrial(true)
   }
-};
 
+
+  const closeBookTrialHandler = () => {
+    setOpenBookTrial(false)
+  }
 
 
   const toggleExpand = () => {
@@ -90,13 +127,20 @@ export const TeacherCard = ({ userId, teacher }) => {
           </ul>
 
           
-          <button type='button'  className={css.likeButton} onClick={handleFavoriteClick}>
+          <button type='button'  className={css.likeButton} onClick={handleFavoriteButtonClick}>
             <svg width={20} height={20} 
               className={isFavorite ? css.svg_heart_red : css.svg_heart}
             >
               <use xlinkHref={`${sprite}#icon-like`}></use>
             </svg>
           </button>
+
+          {openModal && (
+<StyledEngineProvider injectFirst>
+        <Dialog open={openModal} onClose={closeModalHandler} className={css.backdrop}
+           PaperComponent={() => <ModalForAuthenticate onClose={closeModalHandler} />} />
+      </StyledEngineProvider>
+      )}
         </div>
         <h2 className={css.name}>{name} {surname}</h2>
         <ul className={css.basicInfo}>
@@ -145,7 +189,14 @@ export const TeacherCard = ({ userId, teacher }) => {
           ))}
         </ul>
         {isExpanded && (
-          <button type='button' className={css.bookTrialBtn}>Book trial lesson</button>
+          <>
+    <button type='button' className={css.bookTrialBtn} onClick={openBookTrialHandler}>Book trial lesson</button>
+
+    <StyledEngineProvider injectFirst>
+      <Dialog open={openBookTrial} onClose={closeBookTrialHandler} className={css.backdrop}
+                PaperComponent={() => <BookTrial onClose={closeBookTrialHandler} teacher={teacher} />} />
+    </StyledEngineProvider>
+  </>
         )}
       </div>
     </li>

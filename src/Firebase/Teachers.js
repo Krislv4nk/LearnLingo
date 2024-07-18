@@ -3,7 +3,7 @@ import { getCurrentUser } from "./User";
 
 
 import { database } from './Firebase'; 
-import { ref, get, set, child } from 'firebase/database';
+import { ref, get, set } from 'firebase/database';
 
 
 
@@ -85,42 +85,67 @@ export const getTeachersByPrice = async (price) => {
 export const addToFavorites = async (objectTeacher) => {
   try {
     const userData = getCurrentUser();
-    const userId = userData?.uid;
-    let teachersArray =
-      (await get(ref(database, `users/${userId}/teachers`))).val() || [];
+    if (!userData) throw new Error("User is not authenticated");
+
+    const userId = userData.uid;
+    const userRef = ref(database, `users/${userId}/favorites`);
+    
+    
+    const snapshot = await get(userRef);
+    let teachersArray = snapshot.val() || [];
+
     if (!Array.isArray(teachersArray)) {
       teachersArray = [];
     }
+
     teachersArray.push(objectTeacher);
-    await set(ref(database, `users/${userId}/teachers`), teachersArray);
+    await set(userRef, teachersArray);
   } catch (error) {
-    console.error(error);
+    console.error("Error adding to favorites:", error);
   }
 }
+
+
+
+
 
 export const removeFromFavorites = async (teacherID) => {
   try {
     const userData = getCurrentUser();
-    const userId = userData?.uid;
-    const arrayFavorites = await getFavoriteTeachers();
-    const updatedFavorites = arrayFavorites?.filter(
-      (favorite) => favorite.id !== teacherID
-    );
-    await set(ref(database, `users/${userId}/teachers`), updatedFavorites);
+    if (!userData) throw new Error("User is not authenticated");
+
+    const userId = userData.uid;
+    const userRef = ref(database, `users/${userId}/favorites`);
+
+   
+    const snapshot = await get(userRef);
+    const teachersArray = snapshot.val() || [];
+
+    if (!Array.isArray(teachersArray)) {
+      throw new Error("Invalid data format");
+    }
+
+    const updatedFavorites = teachersArray.filter(favorite => favorite.id !== teacherID);
+    await set(userRef, updatedFavorites);
     return updatedFavorites;
   } catch (error) {
-    console.error(error);
+    console.error("Error removing from favorites:", error);
   }
 }
+
 
 export const getFavoriteTeachers = async () => {
   try {
     const userData = getCurrentUser();
-    const userId = userData?.uid;
-    const result = await get(child(ref(database), `users/${userId}/teachers`));
-    return result.val();
+    if (!userData) throw new Error("User is not authenticated");
+
+    const userId = userData.uid;
+    const userRef = ref(database, `users/${userId}/favorites`);
+
+    const snapshot = await get(userRef);
+    return snapshot.val() || [];
   } catch (error) {
-    console.error(error);
+    console.error("Error getting favorite teachers:", error);
   }
 }
 
