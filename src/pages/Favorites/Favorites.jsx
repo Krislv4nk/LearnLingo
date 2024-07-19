@@ -29,9 +29,9 @@ const Favorites = () => {
     <div className={css.pageWrapper}>
       {favorites.length ? (
         <>
-          <ul className={css.list}>
-            {favorites.slice(0, visibleTeachers).map((teacher, index) => (
-              <TeacherCard key={index} teacher={teacher} />
+           <ul className={css.list}>
+            {favorites.slice(0, visibleTeachers).map((teacher) => (
+              <TeacherCard key={teacher.index} teacher={teacher} />
             ))}
           </ul>
           {visibleTeachers < favorites.length && (

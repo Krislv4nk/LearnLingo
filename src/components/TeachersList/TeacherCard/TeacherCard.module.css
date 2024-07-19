@@ -87,7 +87,12 @@ font-size: 16px;
     background-color: transparent;
     position: absolute;
   top: 24px;
-  right: 24px;
+  right: 24px;;
+}
+.regular {
+
+  fill: transparent;
+  stroke: var(--dark-color)
 }
 .name {
     margin-top: 32px;
@@ -223,12 +228,9 @@ font-weight: 700;
 font-size: 16px;
 line-height: 156%;
 }
-.svg_heart {
-   fill: transparent;
-  stroke: var(--dark-color);
-}
 
-.svg_heart_red {
+
+.favorite {
   fill: rgb(245, 6, 6);
   stroke: rgb(245, 6, 6);
 }

@@ -82,14 +82,13 @@ export const getTeachersByPrice = async (price) => {
 
 
 
-export const addToFavorites = async (objectTeacher) => {
+export const addToFavorites = async (teacher) => {
   try {
     const userData = getCurrentUser();
     if (!userData) throw new Error("User is not authenticated");
 
     const userId = userData.uid;
     const userRef = ref(database, `users/${userId}/favorites`);
-    
     
     const snapshot = await get(userRef);
     let teachersArray = snapshot.val() || [];
@@ -98,25 +97,23 @@ export const addToFavorites = async (objectTeacher) => {
       teachersArray = [];
     }
 
-    teachersArray.push(objectTeacher);
+    teachersArray.push(teacher);
     await set(userRef, teachersArray);
+    
+    return teachersArray; 
   } catch (error) {
     console.error("Error adding to favorites:", error);
+    return []; 
   }
 }
 
-
-
-
-
-export const removeFromFavorites = async (teacherID) => {
+export const removeFromFavorites = async (teacherIndex) => {
   try {
     const userData = getCurrentUser();
     if (!userData) throw new Error("User is not authenticated");
 
     const userId = userData.uid;
     const userRef = ref(database, `users/${userId}/favorites`);
-
    
     const snapshot = await get(userRef);
     const teachersArray = snapshot.val() || [];
@@ -125,14 +122,15 @@ export const removeFromFavorites = async (teacherID) => {
       throw new Error("Invalid data format");
     }
 
-    const updatedFavorites = teachersArray.filter(favorite => favorite.id !== teacherID);
+    const updatedFavorites = teachersArray?.filter(favorite => favorite.index !== teacherIndex); 
     await set(userRef, updatedFavorites);
+    
     return updatedFavorites;
   } catch (error) {
     console.error("Error removing from favorites:", error);
+    return []; 
   }
 }
-
 
 export const getFavoriteTeachers = async () => {
   try {
@@ -146,6 +144,7 @@ export const getFavoriteTeachers = async () => {
     return snapshot.val() || [];
   } catch (error) {
     console.error("Error getting favorite teachers:", error);
+    return []; 
   }
 }
 

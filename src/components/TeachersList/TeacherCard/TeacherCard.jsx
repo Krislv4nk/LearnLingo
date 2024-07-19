@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import sprite from '../../../assets/sprite.svg';
 import css from './TeacherCard.module.css';
 import { getFavoriteTeachers, addToFavorites, removeFromFavorites } from '../../../Firebase/Teachers';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 import { StyledEngineProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import { ModalForAuthenticate} from '../../Auth/ModalForAuthenticate/ModalForAuthenticate';
@@ -26,51 +26,31 @@ export const TeacherCard = ({ teacher }) => {
     index
   } = teacher;
 
-  const [isExpanded, setIsExpanded] = useState(false);
+   const [isExpanded, setIsExpanded] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openBookTrial, setOpenBookTrial] = useState(false);
 
-
-  useEffect(() => {
+   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const favoriteTeachers = await getFavoriteTeachers();
-        setFavorites(favoriteTeachers);
-        setIsFavorite(favoriteTeachers.some(fav => fav.index === index));
+        const favorites = await getFavoriteTeachers();
+        setFavorites(favorites);
       } catch (error) {
         console.error('Error fetching favorite teachers:', error);
       }
     };
-
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsAuthenticated(true);
-        fetchFavorites();
-      } else {
-        setIsAuthenticated(false);
-      }
-    });
-  }, [index]);
+    fetchFavorites();
+  }, []);
 
   const handleFavoriteButtonClick = async () => {
-    if (!isAuthenticated) {
-      setOpenModal(true);
-      return;
-    }
-
+    const isFavorite = favorites.some((favorite) => favorite.index === teacher.index);
     try {
       if (isFavorite) {
         await removeFromFavorites(index);
-        setFavorites(favorites.filter(fav => fav.index !== index));
       } else {
         await addToFavorites(teacher);
-        setFavorites([...favorites, teacher]);
       }
-      setIsFavorite(!isFavorite);
     } catch (error) {
       console.error('Error handling favorite click:', error);
     }
@@ -92,7 +72,9 @@ export const TeacherCard = ({ teacher }) => {
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
-    };
+  };
+  
+  const isFavorite = favorites.some((favorite) => favorite.index === teacher.index);
     
   return (
     <li key={teacher.index} className={`${css.itemCard} ${isExpanded ? css.expanded : ''}`}>
@@ -129,8 +111,7 @@ export const TeacherCard = ({ teacher }) => {
           
           <button type='button'  className={css.likeButton} onClick={handleFavoriteButtonClick}>
             <svg width={20} height={20} 
-              className={isFavorite ? css.svg_heart_red : css.svg_heart}
-            >
+              className={isFavorite ? css.favorite : css.regular}>
               <use xlinkHref={`${sprite}#icon-like`}></use>
             </svg>
           </button>
