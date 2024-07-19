@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import sprite from '../../../assets/sprite.svg';
 import css from './TeacherCard.module.css';
 import { getFavoriteTeachers, addToFavorites, removeFromFavorites } from '../../../Firebase/Teachers';
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { StyledEngineProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import { ModalForAuthenticate} from '../../Auth/ModalForAuthenticate/ModalForAuthenticate';
@@ -26,35 +26,59 @@ export const TeacherCard = ({ teacher }) => {
     index
   } = teacher;
 
-   const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openBookTrial, setOpenBookTrial] = useState(false);
 
    useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const favorites = await getFavoriteTeachers();
-        setFavorites(favorites);
-      } catch (error) {
-        console.error('Error fetching favorite teachers:', error);
-      }
-    };
-    fetchFavorites();
-  }, []);
-
-  const handleFavoriteButtonClick = async () => {
-    const isFavorite = favorites.some((favorite) => favorite.index === teacher.index);
+  const fetchFavorites = async () => {
     try {
-      if (isFavorite) {
-        await removeFromFavorites(index);
-      } else {
-        await addToFavorites(teacher);
-      }
+      const favoriteTeachers = await getFavoriteTeachers();
+      setFavorites(favoriteTeachers);
+      setIsFavorite(favoriteTeachers.some(fav => fav.index === index));
     } catch (error) {
-      console.error('Error handling favorite click:', error);
+      console.error('Error fetching favorite teachers:', error);
     }
   };
+
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setIsAuthenticated(true);
+      fetchFavorites();
+    } else {
+      setIsAuthenticated(false);
+    }
+  });
+   }, [index]);
+  
+  
+  
+  const handleFavoriteButtonClick = async () => {
+   
+  if (!isAuthenticated) {
+    setOpenModal(true);
+    return;
+  }
+
+  try {
+    if (isFavorite) {
+      await removeFromFavorites(index);
+      setFavorites(favorites.filter(favorite => favorite.index !== index));
+      setIsFavorite(false);
+    } else {
+      await addToFavorites(teacher);
+      setFavorites([...favorites, teacher]);
+      setIsFavorite(true);
+    }
+    
+  } catch (error) {
+    console.error('Error  handling favorite click":', error);
+  }
+};
 
   const closeModalHandler = () => {
     setOpenModal(false);
@@ -74,7 +98,7 @@ export const TeacherCard = ({ teacher }) => {
     setIsExpanded(!isExpanded);
   };
   
-  const isFavorite = favorites.some((favorite) => favorite.index === teacher.index);
+
     
   return (
     <li key={teacher.index} className={`${css.itemCard} ${isExpanded ? css.expanded : ''}`}>

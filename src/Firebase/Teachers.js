@@ -122,7 +122,7 @@ export const removeFromFavorites = async (teacherIndex) => {
       throw new Error("Invalid data format");
     }
 
-    const updatedFavorites = teachersArray?.filter(favorite => favorite.index !== teacherIndex); 
+    const updatedFavorites = teachersArray.filter(favorite => favorite.index !== teacherIndex); 
     await set(userRef, updatedFavorites);
     
     return updatedFavorites;

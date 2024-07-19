@@ -6,14 +6,15 @@ import { getFavoriteTeachers } from '../../Firebase/Teachers';
 import css from './Favorites.module.css';
 
 const Favorites = () => {
-  const [favorites, setFavorites] = useState([]);
+  
+  const [teachers, setTeachers] = useState([]);
   const [visibleTeachers, setVisibleTeachers] = useState(4);
 
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
         const favoriteTeachers = await getFavoriteTeachers();
-        setFavorites(favoriteTeachers);
+        setTeachers(favoriteTeachers);
       } catch (error) {
         console.error('Error fetching favorite teachers:', error);
       }
@@ -27,14 +28,14 @@ const Favorites = () => {
 
   return (
     <div className={css.pageWrapper}>
-      {favorites.length ? (
+      {teachers.length ? (
         <>
            <ul className={css.list}>
-            {favorites.slice(0, visibleTeachers).map((teacher) => (
-              <TeacherCard key={teacher.index} teacher={teacher} />
+            {teachers.slice(0, visibleTeachers).map((teacher, index) => (
+              <TeacherCard key={index} teacher={teacher} />
             ))}
           </ul>
-          {visibleTeachers < favorites.length && (
+          {visibleTeachers < teachers.length && (
             <button className={css.loadBtn} type='button' onClick={loadMoreTeachers}>
               Load more
             </button>
