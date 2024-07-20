@@ -2,11 +2,11 @@
 import { useState, useEffect } from 'react';
 import sprite from '../../../assets/sprite.svg';
 import css from './TeacherCard.module.css';
-import { getFavoriteTeachers, addToFavorites, removeFromFavorites } from '../../../Firebase/Teachers';
+import { addToFavorites, removeFromFavorites } from '../../../Firebase/Teachers';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { StyledEngineProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import { ModalForAuthenticate} from '../../Auth/ModalForAuthenticate/ModalForAuthenticate';
+import { ModalForAuthenticate } from '../../Auth/ModalForAuthenticate/ModalForAuthenticate';
 import { BookTrial } from './BookTrial/BookTrial';
 
 export const TeacherCard = ({ teacher }) => {
@@ -23,103 +23,71 @@ export const TeacherCard = ({ teacher }) => {
     lesson_info,
     conditions,
     experience,
-    index
+    id 
   } = teacher;
 
-    const [isExpanded, setIsExpanded] = useState(false);
-  const [favorites, setFavorites] = useState([]);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openBookTrial, setOpenBookTrial] = useState(false);
 
-   useEffect(() => {
-  const fetchFavorites = async () => {
-    try {
-      const favoriteTeachers = await getFavoriteTeachers();
-      if (Array.isArray(favoriteTeachers)) {
-        setFavorites(favoriteTeachers);
-        setIsFavorite(favoriteTeachers.some(favorite => favorite.index === index));
-      } else {
-        console.error('Favorite teachers data is not an array:', favoriteTeachers);
-        setFavorites([]);
-        setIsFavorite(false);
-      }
-    } catch (error) {
-      console.error('Error fetching favorite teachers:', error);
-      setFavorites([]);
-      setIsFavorite(false);
-    }
-  };
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+    });
 
-  fetchFavorites();
-  
-  const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  });
-}, [index]);
+    return () => unsubscribe();
+  }, []);
 
-  
-  
-  
-const handleFavoriteButtonClick = async () => {
-  if (!isAuthenticated) {
-    setOpenModal(true);
-    return;
-  }
+  useEffect(() => {
+    const favoriteStatus = localStorage.getItem(`favorite_${id}`);
+    setIsFavorite(favoriteStatus === 'true');
+  }, [id]);
 
-  try {
-    if (!Array.isArray(favorites)) {
-      console.error('Favorites is not an array:', favorites);
-      setFavorites([]);
-      setIsFavorite(false);
+  const handleFavoriteButtonClick = async () => {
+    if (!isAuthenticated) {
+      setOpenModal(true);
       return;
     }
 
-    if (isFavorite) {
-      await removeFromFavorites(index);
-      setFavorites(favorites.filter(favorite => favorite.index !== index));
-      setIsFavorite(false);
-    } else {
-      await addToFavorites(teacher);
-      setFavorites([...favorites, teacher]);
-      setIsFavorite(true);
+    try {
+      if (isFavorite) {
+        await removeFromFavorites(id);
+        localStorage.setItem(`favorite_${id}`, 'false');
+        setIsFavorite(false);
+      } else {
+        await addToFavorites(teacher);
+        localStorage.setItem(`favorite_${id}`, 'true');
+        setIsFavorite(true);
+      }
+    } catch (error) {
+      console.error('Error handling favorite click:', error);
     }
-  } catch (error) {
-    console.error('Error handling favorite click:', error);
-  }
-};
+  };
 
   const closeModalHandler = () => {
     setOpenModal(false);
   };
 
   const openBookTrialHandler = () => {
-    setOpenBookTrial(true)
-  }
-
+    setOpenBookTrial(true);
+  };
 
   const closeBookTrialHandler = () => {
-    setOpenBookTrial(false)
-  }
-
+    setOpenBookTrial(false);
+  };
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
-  
 
-    
   return (
-    <li key={teacher.index} className={`${css.itemCard} ${isExpanded ? css.expanded : ''}`}>
+    <li key={id} className={`${css.itemCard} ${isExpanded ? css.expanded : ''}`}>
       <div className={css.avatarBorder}>
         <img className={css.avatar} src={avatar_url} alt="avatar" />
-        </div>
+      </div>
       <div className={css.infoWrapper}>
         <div className={css.infoDetails}>
           <p className={css.lang}>Languages</p>
@@ -147,8 +115,7 @@ const handleFavoriteButtonClick = async () => {
             </li>
           </ul>
 
-          
-          <button type='button'  className={css.likeButton} onClick={handleFavoriteButtonClick}>
+          <button type='button' className={css.likeButton} onClick={handleFavoriteButtonClick}>
             <svg width={20} height={20} 
               className={isFavorite ? css.favorite : css.regular}>
               <use xlinkHref={`${sprite}#icon-like`}></use>
@@ -156,21 +123,23 @@ const handleFavoriteButtonClick = async () => {
           </button>
 
           {openModal && (
-<StyledEngineProvider injectFirst>
-        <Dialog open={openModal} onClose={closeModalHandler} className={css.backdrop}
-           PaperComponent={() => <ModalForAuthenticate onClose={closeModalHandler} />} />
-      </StyledEngineProvider>
-      )}
+            <StyledEngineProvider injectFirst>
+              <Dialog open={openModal} onClose={closeModalHandler} className={css.backdrop}
+                PaperComponent={() => <ModalForAuthenticate onClose={closeModalHandler} />} />
+            </StyledEngineProvider>
+          )}
         </div>
         <h2 className={css.name}>{name} {surname}</h2>
         <ul className={css.basicInfo}>
           <li className={css.basicInfoItem}>
-            <div className={css.basicInfoPh}><span className={css.spanBasicInfo}>Speaks: </span>
-            <ul className={css.langList}>
-              {languages.map((language, index) => (
-                <li className={css.langItem} key={index}>{language}</li>
-              ))}
-            </ul></div>
+            <div className={css.basicInfoPh}>
+              <span className={css.spanBasicInfo}>Speaks: </span>
+              <ul className={css.langList}>
+                {languages.map((language, index) => (
+                  <li className={css.langItem} key={index}>{language}</li>
+                ))}
+              </ul>
+            </div>
           </li>
           <li className={css.basicInfoItem}>
             <p className={css.basicInfoPh}><span className={css.spanBasicInfo}>Lesson Info:</span> {lesson_info}</p>
@@ -181,25 +150,30 @@ const handleFavoriteButtonClick = async () => {
         </ul>
         {isExpanded && (
           <div>
-                <p className={css.experience}>{experience}</p>
-             
+            <p className={css.experience}>{experience}</p>
+
             <ul className={css.reviewers}>
               {reviews.map((review, index) => (
                 <li key={index}>
-                  <div className={css.reviewerBox}><span className={css.avatarReviewer}>{review.reviewer_name.charAt(0).toUpperCase()}</span>
-                  <div>
-                  <p className={css.reviewName}>{review.reviewer_name}</p>
-                    <p className={css.rate}><svg width={20} height={20}>
-                <use xlinkHref={`${sprite}#icon-star`}></use>
-              </svg>{review.reviewer_rating.toFixed(2)}</p>
-                    </div></div>
+                  <div className={css.reviewerBox}>
+                    <span className={css.avatarReviewer}>{review.reviewer_name.charAt(0).toUpperCase()}</span>
+                    <div>
+                      <p className={css.reviewName}>{review.reviewer_name}</p>
+                      <p className={css.rate}>
+                        <svg width={20} height={20}>
+                          <use xlinkHref={`${sprite}#icon-star`}></use>
+                        </svg>
+                        {review.reviewer_rating.toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
                   <p>{review.comment}</p>
                 </li>
               ))}
-                      </ul>
+            </ul>
           </div>
         )}
-    
+
         <button className={css.toggleExpand} onClick={toggleExpand} type='button'>
           {isExpanded ? 'Show less' : 'Read more'}
         </button>
@@ -210,16 +184,17 @@ const handleFavoriteButtonClick = async () => {
         </ul>
         {isExpanded && (
           <>
-    <button type='button' className={css.bookTrialBtn} onClick={openBookTrialHandler}>Book trial lesson</button>
+            <button type='button' className={css.bookTrialBtn} onClick={openBookTrialHandler}>Book trial lesson</button>
 
-    <StyledEngineProvider injectFirst>
-      <Dialog open={openBookTrial} onClose={closeBookTrialHandler} className={css.backdrop}
+            <StyledEngineProvider injectFirst>
+              <Dialog open={openBookTrial} onClose={closeBookTrialHandler} className={css.backdrop}
                 PaperComponent={() => <BookTrial onClose={closeBookTrialHandler} teacher={teacher} />} />
-    </StyledEngineProvider>
-  </>
+            </StyledEngineProvider>
+          </>
         )}
       </div>
     </li>
   );
 };
+
 

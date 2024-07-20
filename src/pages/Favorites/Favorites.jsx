@@ -11,7 +11,7 @@ const Favorites = () => {
   const [visibleTeachers, setVisibleTeachers] = useState(4);
 
   useEffect(() => {
-    const fetchFavorites = async () => {
+    const fetchTeachers = async () => {
       try {
         const favoriteTeachers = await getFavoriteTeachers();
         setTeachers(favoriteTeachers);
@@ -19,7 +19,7 @@ const Favorites = () => {
         console.error('Error fetching favorite teachers:', error);
       }
     };
-    fetchFavorites();
+    fetchTeachers();
   }, []);
 
   const loadMoreTeachers = () => {

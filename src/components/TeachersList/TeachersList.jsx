@@ -24,9 +24,9 @@ export const TeachersList = () => {
   return (
     <div className={css.wrapper}>
       <ul className={css.list}>
-        {teachers.slice(0, visibleTeachers).map((teacher, index) => (
-            <TeacherCard key={index} teacher={teacher} />
-        ))}
+        {teachers.slice(0, visibleTeachers).map((teacher) => (
+    <TeacherCard key={teacher.id} teacher={teacher} />
+))}
       </ul>
       {visibleTeachers < teachers.length && (
         <button className={css.loadBtn} type='button' onClick={loadMoreTeachers}>
