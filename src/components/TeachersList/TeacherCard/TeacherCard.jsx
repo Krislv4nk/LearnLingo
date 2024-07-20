@@ -23,7 +23,7 @@ export const TeacherCard = ({ teacher }) => {
     lesson_info,
     conditions,
     experience,
-    id 
+    id
   } = teacher;
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -84,7 +84,7 @@ export const TeacherCard = ({ teacher }) => {
   };
 
   return (
-    <li key={id} className={`${css.itemCard} ${isExpanded ? css.expanded : ''}`}>
+    <li key={teacher.id} className={`${css.itemCard} ${isExpanded ? css.expanded : ''}`}>
       <div className={css.avatarBorder}>
         <img className={css.avatar} src={avatar_url} alt="avatar" />
       </div>
@@ -116,8 +116,8 @@ export const TeacherCard = ({ teacher }) => {
           </ul>
 
           <button type='button' className={css.likeButton} onClick={handleFavoriteButtonClick}>
-            <svg width={20} height={20} 
-              className={isFavorite ? css.favorite : css.regular}>
+            <svg width={20} height={20}
+              className={isFavorite ? 'Add to favorites' && css.favorite : 'Remove from favorites' && css.regular}>
               <use xlinkHref={`${sprite}#icon-like`}></use>
             </svg>
           </button>
@@ -132,14 +132,12 @@ export const TeacherCard = ({ teacher }) => {
         <h2 className={css.name}>{name} {surname}</h2>
         <ul className={css.basicInfo}>
           <li className={css.basicInfoItem}>
-            <div className={css.basicInfoPh}>
-              <span className={css.spanBasicInfo}>Speaks: </span>
+            <div className={css.basicInfoPh}><span className={css.spanBasicInfo}>Speaks: </span>
               <ul className={css.langList}>
                 {languages.map((language, index) => (
                   <li className={css.langItem} key={index}>{language}</li>
                 ))}
-              </ul>
-            </div>
+              </ul></div>
           </li>
           <li className={css.basicInfoItem}>
             <p className={css.basicInfoPh}><span className={css.spanBasicInfo}>Lesson Info:</span> {lesson_info}</p>
@@ -151,22 +149,16 @@ export const TeacherCard = ({ teacher }) => {
         {isExpanded && (
           <div>
             <p className={css.experience}>{experience}</p>
-
             <ul className={css.reviewers}>
               {reviews.map((review, index) => (
                 <li key={index}>
-                  <div className={css.reviewerBox}>
-                    <span className={css.avatarReviewer}>{review.reviewer_name.charAt(0).toUpperCase()}</span>
+                  <div className={css.reviewerBox}><span className={css.avatarReviewer}>{review.reviewer_name.charAt(0).toUpperCase()}</span>
                     <div>
                       <p className={css.reviewName}>{review.reviewer_name}</p>
-                      <p className={css.rate}>
-                        <svg width={20} height={20}>
-                          <use xlinkHref={`${sprite}#icon-star`}></use>
-                        </svg>
-                        {review.reviewer_rating.toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
+                      <p className={css.rate}><svg width={20} height={20}>
+                        <use xlinkHref={`${sprite}#icon-star`}></use>
+                      </svg>{review.reviewer_rating.toFixed(2)}</p>
+                    </div></div>
                   <p>{review.comment}</p>
                 </li>
               ))}
@@ -196,5 +188,6 @@ export const TeacherCard = ({ teacher }) => {
     </li>
   );
 };
+
 
 
