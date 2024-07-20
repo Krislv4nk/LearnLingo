@@ -87,12 +87,16 @@ font-size: 16px;
     background-color: transparent;
     position: absolute;
   top: 24px;
-  right: 24px;;
+  right: 24px;
 }
 .regular {
-
   fill: transparent;
   stroke: var(--dark-color)
+}
+
+.favorite {
+  fill: rgb(245, 6, 6);
+  stroke: rgb(245, 6, 6);
 }
 .name {
     margin-top: 32px;

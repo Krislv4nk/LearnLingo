@@ -37,34 +37,50 @@ export const TeacherCard = ({ teacher }) => {
   const fetchFavorites = async () => {
     try {
       const favoriteTeachers = await getFavoriteTeachers();
-      setFavorites(favoriteTeachers);
-      setIsFavorite(favoriteTeachers.some(fav => fav.index === index));
+      if (Array.isArray(favoriteTeachers)) {
+        setFavorites(favoriteTeachers);
+        setIsFavorite(favoriteTeachers.some(favorite => favorite.index === index));
+      } else {
+        console.error('Favorite teachers data is not an array:', favoriteTeachers);
+        setFavorites([]);
+        setIsFavorite(false);
+      }
     } catch (error) {
       console.error('Error fetching favorite teachers:', error);
+      setFavorites([]);
+      setIsFavorite(false);
     }
   };
 
+  fetchFavorites();
+  
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setIsAuthenticated(true);
-      fetchFavorites();
     } else {
       setIsAuthenticated(false);
     }
   });
-   }, [index]);
+}, [index]);
+
   
   
   
-  const handleFavoriteButtonClick = async () => {
-   
+const handleFavoriteButtonClick = async () => {
   if (!isAuthenticated) {
     setOpenModal(true);
     return;
   }
 
   try {
+    if (!Array.isArray(favorites)) {
+      console.error('Favorites is not an array:', favorites);
+      setFavorites([]);
+      setIsFavorite(false);
+      return;
+    }
+
     if (isFavorite) {
       await removeFromFavorites(index);
       setFavorites(favorites.filter(favorite => favorite.index !== index));
@@ -74,9 +90,8 @@ export const TeacherCard = ({ teacher }) => {
       setFavorites([...favorites, teacher]);
       setIsFavorite(true);
     }
-    
   } catch (error) {
-    console.error('Error  handling favorite click":', error);
+    console.error('Error handling favorite click:', error);
   }
 };
 
