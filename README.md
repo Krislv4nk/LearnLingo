@@ -2,9 +2,9 @@
 
 
 <div style="display: flex; flex-direction: column; gap: 10px;">
-    <img src="./src/assets/images/cover1.jpg" alt="Image 1" style="max-width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
-    <img src="./src/assets/images/cover2.jpg" alt="Image 2" style="max-width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
-    <img src="./src/assets/images/cover3.jpg" alt="Image 3" style="max-width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
+    <img src="./src/assets/images/cover1.jpg" alt="Image 1" style="width: 30%; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
+    <img src="./src/assets/images/cover2.jpg" alt="Image 2" style="width: 30%; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
+    <img src="./src/assets/images/cover3.jpg" alt="Image 3" style="width: 30%; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
 </div>
 
 
@@ -81,7 +81,40 @@ The Teachers App is designed to help users find and interact with a database of 
    ```bash
     npm run dev
 
-
+## Dependencies
+<a href="https://www.npmjs.com/package/@emotion/react">
+    <img alt="@emotion/react" src="https://img.shields.io/npm/v/@emotion/react?color=%230000dd&label=%40emotion%2Freact&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/@emotion/styled">
+    <img alt="@emotion/styled" src="https://img.shields.io/npm/v/@emotion/styled?color=%230000dd&label=%40emotion%2Fstyled&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/@mui/material">
+    <img alt="@mui/material" src="https://img.shields.io/npm/v/@mui/material?color=%230000dd&label=%40mui%2Fmaterial&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/formik">
+    <img alt="formik" src="https://img.shields.io/npm/v/formik?color=%230000dd&label=formik&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/react">
+    <img alt="react" src="https://img.shields.io/npm/v/react?color=%230000dd&label=react&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/react-dom">
+    <img alt="react-dom" src="https://img.shields.io/npm/v/react-dom?color=%230000dd&label=react-dom&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/react-loader-spinner">
+    <img alt="react-loader-spinner" src="https://img.shields.io/npm/v/react-loader-spinner?color=%230000dd&label=react-loader-spinner&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/react-router-dom">
+    <img alt="react-router-dom" src="https://img.shields.io/npm/v/react-router-dom?color=%230000dd&label=react-router-dom&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/react-toastify">
+    <img alt="react-toastify" src="https://img.shields.io/npm/v/react-toastify?color=%230000dd&label=react-toastify&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/uuid">
+    <img alt="uuid" src="https://img.shields.io/npm/v/uuid?color=%230000dd&label=uuid&labelColor=%230080ff&style=for-the-badge">
+</a>
+<a href="https://www.npmjs.com/package/vite">
+    <img alt="vite" src="https://img.shields.io/npm/v/vite?color=%230000dd&label=vite&labelColor=%230080ff&style=for-the-badge">
+</a>
 
 
 
@@ -90,5 +123,10 @@ The application's layout and design are implemented based on the  [Figma design]
 
 ##  Technical Specifications (ТЗ)
 For detailed technical specifications and project requirements, please refer to the [Technical Documentation](https://docs.google.com/document/d/1ZB_MFgnnJj7t7OXtv5hESSwY6xRgVoACZKzgZczWc3Y/edit?usp=sharing).
+
+
+
+
+
 
 
