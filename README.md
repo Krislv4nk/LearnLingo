@@ -14,7 +14,7 @@ This project is a web application for viewing and interacting with a database of
 
 ## Project Overview
 
-The Teachers App is designed to help users find and interact with a database of teachers. Users can register, log in, view teacher profiles, add teachers to their favorites, and book trial lessons. The application leverages Firebase for authentication and data storage, ensuring real-time updates and secure user management.
+The Teachers App is created to help users find and interact with a database of teachers. Users can register, log in, view teacher profiles, add teachers to their favorites, and book trial lessons. The application leverages Firebase for authentication and data storage, ensuring real-time updates and secure user management.
 
 ## Features
 
