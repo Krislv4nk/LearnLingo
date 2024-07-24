@@ -7,7 +7,7 @@ import { AuthForm } from '../AuthForm/AuthForm';
 import css from './AuthButtons.module.css';
 import sprite from '../../../assets/sprite.svg';
 
-export const AuthButtons = () => {
+export const AuthButtons = ({ setIsSignIn }) => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const [isSignUp, setIsSignUp] = useState(true);
@@ -47,7 +47,7 @@ export const AuthButtons = () => {
           </button>
           <StyledEngineProvider injectFirst>
             <Dialog open={openLoginModal} onClose={closeModalHandler} className={css.backdrop}
-              PaperComponent={() => <AuthForm onClose={closeModalHandler} isSignUp={isSignUp} onSwitchToLogin={handleSwitchToLogin} />} />
+              PaperComponent={() => <AuthForm onClose={closeModalHandler} isSignUp={isSignUp} setIsSignIn={ setIsSignIn } onSwitchToLogin={handleSwitchToLogin} />} />
           </StyledEngineProvider>
         </li>
         <li>
@@ -56,7 +56,7 @@ export const AuthButtons = () => {
           </button>
           <StyledEngineProvider injectFirst>
             <Dialog open={openRegisterModal} onClose={closeModalHandler} className={css.backdrop}
-              PaperComponent={() => <AuthForm onClose={closeModalHandler} isSignUp={isSignUp} onSwitchToLogin={handleSwitchToLogin} />} />
+              PaperComponent={() => <AuthForm onClose={closeModalHandler} isSignUp={isSignUp} setIsSignIn={setIsSignIn} onSwitchToLogin={handleSwitchToLogin} />} />
           </StyledEngineProvider>
         </li>
       </ul>

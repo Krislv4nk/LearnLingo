@@ -13,6 +13,7 @@
   --accentBg: #fbe9ba;
   --iconColor: #E7C885;
   --gradientColor: linear-gradient(180deg, #eeb055 0%, #d08f38 100%);
+  --background: #f4c65074;
 }
 
 [data-theme="theme2"] {
@@ -20,6 +21,7 @@
   --accentBg: #CBDED3;
   --iconColor: #9EB9AD;
   --gradientColor: linear-gradient(180deg, #295761 0%, #183e49 100%);
+  --background: #9fbaae81;
 }
 
 [data-theme="theme3"] {
@@ -27,6 +29,7 @@
   --accentBg: #c8dae9;
   --iconColor: #BFD6EA;
   --gradientColor: linear-gradient(180deg, #314b6e 0%, #1f385a 100%);
+  --background: #9fb7ce93;
 }
 
 [data-theme="theme4"] {
@@ -34,6 +37,7 @@
   --accentBg: #f2c0bd;
   --iconColor: #DFA299;
   --gradientColor: linear-gradient(180deg, #b03f3e 0%, #982a27 100%);
+  --background: #e0a39a82;
 }
 
 [data-theme="theme5"] {
@@ -41,6 +45,7 @@
   --accentBg: #f4c8ba;
   --iconColor: #EFA98C;
   --gradientColor: linear-gradient(180deg, #e17650 0%, #ca5b38 100%);
+  --background: #f0ab8d8f;
 }
 
 body {

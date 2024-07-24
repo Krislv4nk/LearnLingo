@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import icons from '../../../assets/sprite.svg';
 import css from './AuthForm.module.css';
 
-export const AuthForm = ({ onClose, isSignUp, onSwitchToLogin }) => {
+export const AuthForm = ({ onClose, isSignUp, onSwitchToLogin, setIsSignIn }) => {
  const navigate = useNavigate();
   const [lookPassword, setLookPassword] = useState(false);
 
@@ -41,11 +41,12 @@ password: Yup.string().required('Password is required'),
   };
 
  const handleLogin = async (values, { setSubmitting }) => {
-    try {
+   try {
       await userSignIn(values);
-      navigate('/teachers');
+      localStorage.setItem('isLogin', 'true');
+      setIsSignIn(true);  
+      navigate('teachers');
       onClose();
-      window.location.reload();
       setSubmitting(false);
     } catch (error) {
       console.error('Error logging in:', error);

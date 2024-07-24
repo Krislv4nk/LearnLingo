@@ -51,19 +51,19 @@ const [isSignIn, setIsSignIn] = useState(localStorage.getItem('isLogin') === 'tr
           
           <li>
             <NavLink className={({ isActive }) =>
-              `${css.link} ${isActive ? css.active : ''}`} to="/teachers">Teachers</NavLink>
+              `${css.link} ${isActive ? css.active : ''}`} to="teachers">Teachers</NavLink>
           </li>
           {isSignIn ?
             <li>
               <NavLink className={({ isActive }) =>
-              `${css.link} ${isActive ? css.active : ''}`} to="/favorites">Favorites</NavLink>
+              `${css.link} ${isActive ? css.active : ''}`} to="favorites">Favorites</NavLink>
             </li> : null}
         </ul>
       </nav>
       {isSignIn ?
         (<Status isSignIn={isSignIn} onLogoutSuccess={handleLogoutSuccess}/>)
         :
-        (<AuthButtons />)}
+        (<AuthButtons setIsSignIn={setIsSignIn}/>)}
       
 
       <button className={css.mobileMenuButton} onClick={handleOpenClick} type='button' title='Menu'>
@@ -73,7 +73,7 @@ const [isSignIn, setIsSignIn] = useState(localStorage.getItem('isLogin') === 'tr
       </button>
     
       <StyledEngineProvider injectFirst>
-        <Dialog open={openMenuMob} onClose={handleCloseClick} className={css.backdrop}
+        <Dialog open={openMenuMob} onClose={handleCloseClick} className={css.backdropNone}
           PaperComponent={() => <MenuMob onClose={handleCloseClick} isSignIn={isSignIn} />} />
       </StyledEngineProvider>
     </header>

@@ -36,7 +36,6 @@ export const getTeachersByLanguage = async (language) => {
       })).filter(teacher => {
         return Array.isArray(teacher.languages) ? teacher.languages.includes(language) : teacher.languages === language;
       });
-      console.log(filteredTeachersByLanguage);
       return filteredTeachersByLanguage;
     }
     return []; 
@@ -59,7 +58,6 @@ export const getTeachersByLevel = async (level) => {
       })).filter(teacher => {
         return Array.isArray(teacher.levels) ? teacher.levels.includes(level) : teacher.levels === level;
       });
-      console.log(filteredTeachersByLevel);
       return filteredTeachersByLevel;
     }
     return []; 
@@ -82,13 +80,70 @@ export const getTeachersByPrice = async (price) => {
       })).filter(teacher => {
         return teacher.price_per_hour === +price;
       });
-      console.log(filteredTeachersByPrice);
       return filteredTeachersByPrice;
     }
     return []; 
   } catch (error) {
-    console.error('Error during fetching:', error);
     return []; 
+  }
+};
+
+
+export const getFilteredTeachers = async (language, level, price) => {
+
+  if (!language && !level && !price) {
+      return await getAllTeachers();
+    }
+  try {
+    let teachersLanguage, teachersLevel, teachersPrice;
+
+    if (language) {
+      teachersLanguage = await getTeachersByLanguage(language);
+    }
+
+    if (level) {
+      teachersLevel = await getTeachersByLevel(level);
+    }
+
+    if (price) {
+      teachersPrice = await getTeachersByPrice(price);
+    }
+
+    if (language && !level && !price) {
+      return teachersLanguage;
+    } else if (!language && level && !price) {
+      return teachersLevel;
+    } else if (!language && !level && price) {
+      return teachersPrice;
+    } else {
+      let filteredTeachers = [];
+
+      if (language && level && !price) {
+        filteredTeachers = teachersLanguage.filter((teacherLang) =>
+          teachersLevel.some((teacherLevel) => teacherLang.id === teacherLevel.id)
+        );
+      } else if (!language && level && price) {
+        filteredTeachers = teachersLevel.filter((teacherLevel) =>
+          teachersPrice.some((teacherPrice) => teacherLevel.id === teacherPrice.id)
+        );
+      } else if (language && !level && price) {
+        filteredTeachers = teachersLanguage.filter((teacherLang) =>
+          teachersPrice.some((teacherPrice) => teacherLang.id === teacherPrice.id)
+        );
+      } else if (language && level && price) {
+        filteredTeachers = teachersLanguage.filter((teacherLang) =>
+          teachersLevel.some((teacherLevel) =>
+            teachersPrice.some((teacherPrice) =>
+              teacherLang.id === teacherLevel.id && teacherLevel.id === teacherPrice.id
+            )
+          )
+        );
+      }
+
+      return filteredTeachers;
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 

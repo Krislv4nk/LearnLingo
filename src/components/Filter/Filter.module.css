@@ -47,12 +47,13 @@ font-weight: 500;
 font-size: 14px;
 line-height: 129%;
 background-color: var(--accentBtn);
-margin: 0 auto;
+margin: 0 auto 40px auto;
 border: none;
 border-radius: 12px;
 padding: 16px 48px;
 width: 183px;
 height: 60px;
+
 }
 }
 
@@ -73,5 +74,9 @@ background-color: var(--white-color);
 outline: none;
 border: none;
     }
+    .loadBtn {
+         margin-left: 528px;
+    }
+   
 
 }

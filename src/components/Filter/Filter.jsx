@@ -1,8 +1,8 @@
 
 
-import { useState } from 'react';
+import  { useState } from 'react';
 import Select from 'react-select';
-import { getTeachersByLanguage, getTeachersByLevel, getTeachersByPrice } from '../../Firebase/Teachers';
+import { getFilteredTeachers } from '../../Firebase/Teachers';
 import { v4 as uuidv4 } from 'uuid';
 import { languageOptions, levelOptions, priceOptions } from '../../Firebase/constants';
 import { TeacherCard } from '../TeachersList/TeacherCard/TeacherCard';
@@ -10,56 +10,43 @@ import css from './Filter.module.css';
 
 export const Filter = ({ onApply }) => {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
-  const [selectedLevel, setSelectedLevel] = useState(null); 
+  const [selectedLevel, setSelectedLevel] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState(null);
   const [filteredTeachers, setFilteredTeachers] = useState([]);
+  const [displayedTeachers, setDisplayedTeachers] = useState([]);
   
+  const handleFilterChange = async (language, level, price) => {
+    try {
+      const teachers = await getFilteredTeachers(language, level, price);
+      setFilteredTeachers(teachers);
+      setDisplayedTeachers(teachers.slice(0, 4));
+      onApply(); 
+    } catch (error) {
+      console.error('Error fetching filtered teachers:', error);
+    }
+  };
 
-  const handleChangeLanguage = async (selectedOption) => {
+  const handleChangeLanguage = (selectedOption) => {
     setSelectedLanguage(selectedOption);
-     if (selectedOption && selectedOption.value) {
-      try {
-        const teachers = await getTeachersByLanguage(selectedOption.value);
-        setFilteredTeachers(teachers);
-        onApply(selectedOption);
-      } catch (error) {
-        console.error('Error fetching filtered teachers:', error);
-      }
-    } else {
-      setFilteredTeachers([]);
-    }
+    handleFilterChange(selectedOption?.value, selectedLevel?.value, selectedPrice?.value);
   };
 
-  const handleChangeLevel = async (selectedOption) => {
-  setSelectedLevel(selectedOption);
-  if (selectedOption && selectedOption.value) {
-    try {
-      const teachers = await getTeachersByLevel(selectedOption.value);
-      setFilteredTeachers(teachers);
-      onApply(selectedOption);
-    } catch (error) {
-      console.error('Error fetching filtered teachers:', error);
-    }
-  } else {
-    setFilteredTeachers([]);
-  }
-};
-
-const handleChangePrice = async (selectedOption) => {
-  setSelectedPrice(selectedOption);
-  if (selectedOption && selectedOption.value) {
-    try {
-      const teachers = await getTeachersByPrice(selectedOption.value);
-      setFilteredTeachers(teachers);
-      onApply(selectedOption);
-    } catch (error) {
-      console.error('Error fetching filtered teachers:', error);
-    }
-  } else {
-    setFilteredTeachers([]);
-  }
+  const handleChangeLevel = (selectedOption) => {
+    setSelectedLevel(selectedOption);
+    handleFilterChange(selectedLanguage?.value, selectedOption?.value, selectedPrice?.value);
   };
-  
+
+  const handleChangePrice = (selectedOption) => {
+    setSelectedPrice(selectedOption);
+    handleFilterChange(selectedLanguage?.value, selectedLevel?.value, selectedOption?.value);
+  };
+
+  const loadMoreTeachers = () => {
+    setDisplayedTeachers(prevDisplayed => [
+      ...prevDisplayed,
+      ...filteredTeachers.slice(prevDisplayed.length, prevDisplayed.length + 4)
+    ]);
+  };
 
   const customStyles = {
     control: (provided) => ({
@@ -83,10 +70,6 @@ const handleChangePrice = async (selectedOption) => {
       backgroundColor: state.isSelected ? 'var(--white-color)' : provided.backgroundColor,
       color: state.isSelected ? 'var(--accentBtn)' : provided.color,
     }),
-  };
-
-  const loadMoreTeachers = () => {
-    setFilteredTeachers(prevFilteredTeachers => [...prevFilteredTeachers, ...prevFilteredTeachers.slice(0, 4)]);
   };
 
   return (
@@ -128,19 +111,21 @@ const handleChangePrice = async (selectedOption) => {
       </ul>
       <div className={css.listWrapper}>
         <ul>
-          {filteredTeachers.map(teacher => (
-      <TeacherCard key={uuidv4()} teacher={teacher} />
+          {displayedTeachers.map(teacher => (
+            <TeacherCard key={uuidv4()} teacher={teacher} />
           ))}
         </ul>
-        {filteredTeachers.length > 0 && filteredTeachers.length % 4 === 0 && (
-        <button className={css.loadBtn} type='button' onClick={loadMoreTeachers}>
-          Load more
-        </button>
-      )}
+        {displayedTeachers.length > 0 && displayedTeachers.length % 4 === 0 && displayedTeachers.length < filteredTeachers.length && (
+          <button className={css.loadBtn} type='button' onClick={loadMoreTeachers}>
+            Load more
+          </button>
+        )}
       </div>
     </div>
   );
 };
+
+
 
 
 
