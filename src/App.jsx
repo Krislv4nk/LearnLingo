@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { Suspense, lazy } from "react";
-import { Loader } from "components/Loader/Loader.jsx";
+import { Loader } from "components/SharedLayout/Loader/Loader.jsx";
 import PrivateRoute from './components/Auth/Routes/PrivateRoute';
 import SharedLayout from 'components/SharedLayout/SharedLayout';
 
